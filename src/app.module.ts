@@ -14,14 +14,14 @@ import { CustomersModule } from './modules/client/customers/customers.module';
 import { EventsGatewayModule } from './modules/common/events.gateway/events.gateway.module';
 import { OrderExecutionCalculatorModule } from './modules/common/order-execution-time-calculator/order-execution-calculator.module';
 import { CustomerAuthModule } from './modules/client/customer-auth/customer-auth.module';
-import configuration from './configurations/configuration';
+import envValidationScheme from './configurations/envValidationScheme';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
-            envFilePath: ['.env', '.env.development.local', '.env.development'],
-            load: [configuration],
+            envFilePath: '.env',
             isGlobal: true,
+            validationSchema: envValidationScheme,
         }),
         ScheduleModule.forRoot(),
         EventEmitterModule.forRoot(), EventsGatewayModule,

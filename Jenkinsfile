@@ -11,15 +11,15 @@ pipeline {
         PORT=5000
         IS_DEV=true
         IS_LOCAL_NETWORK_DEPLOY=true
-        CLIENT_APP_URL='http://localhost:3005'
-        CLIENT_APP_LOCAL_NETWORK_URL='http://192.168.100.11:3005'
+        CLIENT_APP_URL="http://localhost:3005"
+        CLIENT_APP_LOCAL_NETWORK_URL="http://192.168.100.11:3005"
 
         // # DB
-        DB_HOST='myHost'
+        DB_HOST="myHost"
         DB_PORT=5432
 
-        DB_USER='test'
-        DB_PASSWORD='test'
+        DB_USER="test"
+        DB_PASSWORD="test"
     }
 
     stages {
@@ -63,7 +63,7 @@ pipeline {
 
                     // sh 'docker rm ${DOCKER_NAME}'
                     sh 'echo "Run new build"'
-                    sh 'docker run -d -p ${APP_PORT}:3000 --name ${DOCKER_NAME} -v sqlite_data:/usr/src/app/db ${IMAGE_NAME}:${VERSION}.${BUILD_NUMBER}'
+                    sh 'docker run -d -p ${PORT}:3000 --name ${DOCKER_NAME} -v sqlite_data:/usr/src/app/db ${IMAGE_NAME}:${VERSION}.${BUILD_NUMBER}'
                 }
             }
         }

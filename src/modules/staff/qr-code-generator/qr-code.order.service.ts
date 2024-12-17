@@ -7,6 +7,7 @@ import { generateUrl } from './utility/url.generator';
 import { ConfigService } from '@nestjs/config';
 import QrInfo from './models/qr-info';
 
+
 @Injectable()
 export class QrCodeOrderService {
     constructor(
@@ -40,14 +41,14 @@ export class QrCodeOrderService {
 
     // TODO: dynaic host resolver
     private getHost(): string {
-        const isDev = this.configService.get<boolean>('isDev', false);
-        const isLocalDeploy = this.configService.get<boolean>('islocalDeploy', false);
+        const isDev = this.configService.get<boolean>('IS_DEV', false);
+        const isLocalDeploy = this.configService.get<boolean>('IS_LOCAL_NETWORK_DEPLOY', false);
 
         if (isDev && isLocalDeploy) {
-            return this.configService.get<string>('client.cientAppLocakUrl')!;
+            return this.configService.get<string>('CLIENT_APP_LOCAL_NETWORK_URL')!;
         }
 
-        const clientUrl = this.configService.get<string>('client.clientAppUrl');
+        const clientUrl = this.configService.get<string>('CLIENT_APP_URL');
 
         if (!clientUrl) {
             throw new Error('CLIENT_APP_URL is not defined.');
