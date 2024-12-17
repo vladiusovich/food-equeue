@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { QrCodeService } from './qr-code.service';
 import { Order } from '../../client/orders/entities/order.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -25,22 +25,23 @@ export class QrCodeOrderService {
         });
 
         if (!order) {
-            throw new Error('Order not found.');
+            throw new NotFoundException(`Order with ID ${id} not found`);
         } else if (!order?.hash) {
-            throw new Error('Order hash not found.');
+            throw new NotFoundException(`Order hash for order ${id} not found`);
         }
 
-        const url = generateUrl(this.getHost(), order.hash);
+        const url = generateUrl(this.getClientAppAddress(), order.hash);
 
-        // TODO: raw url for dev mode only (add to config)
+        const isDev = this.configService.get<boolean>('IS_DEV', false);
+
         return {
-            url,
+            url: isDev ? url : undefined,
             qrCode: await this.qrCodeService.generateQrCode(url),
         };
     }
 
     // TODO: dynaic host resolver
-    private getHost(): string {
+    private getClientAppAddress(): string {
         const isDev = this.configService.get<boolean>('IS_DEV', false);
         const isLocalDeploy = this.configService.get<boolean>('IS_LOCAL_NETWORK_DEPLOY', false);
 

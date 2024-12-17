@@ -19,6 +19,7 @@ import StaffEventType from './events/staff.events';
         origin: '*',
     },
 })
+
 export class EventsGateway {
     @WebSocketServer()
     server: Server;

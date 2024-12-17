@@ -1,4 +1,4 @@
 export default interface QrInfo {
-    url: string;
+    url?: string;
     qrCode: string;
 }
