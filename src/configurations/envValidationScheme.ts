@@ -6,6 +6,8 @@ const envValidationScheme = Joi.object({
     IS_LOCAL_NETWORK_DEPLOY: Joi.boolean(),
     CLIENT_APP_URL: Joi.string().required(),
     CLIENT_APP_LOCAL_NETWORK_URL: Joi.string().required(),
+    JWT_SECRET: Joi.string().required(),
+    JWT_EXPIRES_IN: Joi.number().required(),
 });
 
 export default envValidationScheme;
