@@ -4,10 +4,10 @@ import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { Logger } from "winston";
 import OrdersStatus from "./interfaces/ordersStatus";
 import CustomerOrderStatus from "./interfaces/customerOrderStatus";
-import { CustomerAuthGuard } from "../customer-auth/customer-auth-gurd";
+import { AccessTokenGuard } from "../customer-auth/guards/accessToken.guard";
 
 @Controller("orders")
-@UseGuards(CustomerAuthGuard)
+@UseGuards(AccessTokenGuard)
 export class OrdersController {
     constructor(
         private readonly ordersService: OrdersService,

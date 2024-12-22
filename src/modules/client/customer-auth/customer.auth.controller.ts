@@ -5,7 +5,6 @@ import { IdentifyCustomerOrderResponse } from "../customers/models/customer-orde
 import IdentifyCustomerOrderRequest from "../customers/models/requestes/Identify-customero-rder.request";
 import { CustomerAuthService } from "./customer-auth.service";
 
-// TODO
 @Controller("customer/auth")
 export class CustomerAuthController {
     constructor(
@@ -14,9 +13,11 @@ export class CustomerAuthController {
 
     @Post("idenitify")
     async idenitify(@Body() request: IdentifyCustomerOrderRequest): Promise<IdentifyCustomerOrderResponse> {
+        const token = await this.customerAuthService.generateToken({ hash: request.hash });
 
         return {
-            access_token: this.customerAuthService.generateToken({ hash: request.hash }),
+            access_token: token.accessToken,
+            // refresh_token: token.refreshToken,
         };
     }
 }

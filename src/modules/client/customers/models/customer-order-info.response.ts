@@ -6,6 +6,7 @@ interface CustomerOrderInfoResponse {
 
 export interface IdentifyCustomerOrderResponse {
     access_token: string;
+    // refresh_token: string;
 }
 
 export default CustomerOrderInfoResponse;

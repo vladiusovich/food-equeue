@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Order } from '../orders/entities/order.entity';
 import { CustomerOrderService } from './customer.order.service';
 import { CustomerController } from './customer.controller';
-import { CustomerAuthGuard } from '../customer-auth/customer-auth-gurd';
+import { AccessTokenGuard } from '../customer-auth/guards/accessToken.guard';
 import { CustomerAuthModule } from '../customer-auth/customer-auth.module';
 
 @Module({
@@ -14,7 +14,7 @@ import { CustomerAuthModule } from '../customer-auth/customer-auth.module';
     controllers: [CustomerController],
     providers: [
         CustomerOrderService,
-        CustomerAuthGuard,
+        AccessTokenGuard,
     ],
 })
 export class CustomersModule { }
