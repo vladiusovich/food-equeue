@@ -1,14 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-// import { logger } from './middlewaries/logger.middleware';
 import { ConfigService } from '@nestjs/config';
 import { SeederService } from './modules/infrastructure/seeder/seeder.service';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-
-    // global
-    // app.use(logger);
 
     const seederService = app.get(SeederService);
     const configService = app.get(ConfigService);

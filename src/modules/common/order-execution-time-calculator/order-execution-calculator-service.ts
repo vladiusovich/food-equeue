@@ -49,12 +49,11 @@ export class OrderExecutionCalculatorService {
             where: {
                 createdAt: MoreThanOrEqual(start),
                 readyAt: LessThanOrEqual(end),
+                status: 'ready',
             },
             select: ['createdAt', 'readyAt'],
         });
 
-        const readyOrders = orders.filter(order => order.readyAt);
-
-        return readyOrders;
+        return orders.filter(order => order.readyAt);
     }
 }

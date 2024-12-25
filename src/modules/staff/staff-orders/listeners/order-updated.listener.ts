@@ -21,7 +21,7 @@ export class OrderUpdatedListener {
 
     @OnEvent("order.updated")
     async handleOrderCreatedEvent(event: OrderCreatedEvent) {
-        this.logger.info(`Order STAFF ${event.payload.id} pushed`);
+        this.logger.info(`Order.Update STAFF ${event.payload.id} pushed`);
 
         const ordersStatus = await this.ordersStaffInfoService.getOrdersStatus();
 
