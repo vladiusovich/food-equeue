@@ -1,6 +1,17 @@
 <script lang="ts">
     import { Tabs } from "@skeletonlabs/skeleton-svelte";
-    import type { TabsProps } from "./TabsProps";
+    import type { TabsRootProps } from "@skeletonlabs/skeleton-svelte";
+    import type { Snippet } from "svelte";
+
+    interface Tab {
+        title: string | Snippet;
+        content: string | Snippet;
+        value: string;
+    }
+
+    interface TabsProps extends TabsRootProps {
+        tabs: Tab[];
+    }
 
     let { tabs }: TabsProps = $props();
 </script>
