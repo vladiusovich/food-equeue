@@ -1,8 +1,11 @@
 <script lang="ts">
 	import "../app.css";
 	import favicon from "$lib/assets/favicon.svg";
+	import { initAppContext } from "$lib/stores";
 
 	let { children } = $props();
+
+	initAppContext();
 </script>
 
 <svelte:head>

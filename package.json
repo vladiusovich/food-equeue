@@ -26,6 +26,8 @@
 	},
 	"dependencies": {
 		"@lucide/svelte": "^0.577.0",
+		"axios": "^1.13.6",
+		"socket.io-client": "^4.8.3",
 		"tailwindcss": "^4.2.2"
 	}
 }
