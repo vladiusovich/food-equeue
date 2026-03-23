@@ -2,8 +2,10 @@
 	import { getAppContext } from "$lib/stores";
 	const app = getAppContext();
 
-	const readyOrders = app.orders.ordersProgress.ready ?? [];
-	const isReady = readyOrders.some((order) => order.isCurrent);
+	const ordersProgress = $derived(app.orders.ordersProgress);
+
+	const readyOrders = $derived(ordersProgress.ready ?? []);
+	const isReady = $derived(readyOrders.some((order) => order.isCurrent));
 </script>
 
 {#if isReady}
