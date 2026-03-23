@@ -4,8 +4,15 @@
 
 	const app = getAppContext();
 
-	const inProgress = app.orders.ordersProgress?.inProgress?.length ?? 0;
-	const ready = app.orders.ordersProgress?.ready?.length ?? 0;
+	$effect(() => {
+		app.orders.fetch();
+		console.log("effect")
+	});
+
+	let ordersProgress = $derived(app.orders.ordersProgress);
+
+	let inProgress = $derived(ordersProgress?.inProgress?.length ?? 0);
+	let ready = $derived(ordersProgress?.ready?.length ?? 0);
 </script>
 
 <div class="grid grid-cols-3 gap-2 w-full">

@@ -1,5 +1,7 @@
+import foodServiceApi from '$lib/api/requests'
+import type FoodServiceApi from '$lib/api/requests/FoodServiceApi'
 import type { RuntimeDataType } from '$lib/types/events/RuntimeDataType'
-import type OrdersProgressStatus from '$lib/types/OrdersProgressStatus'
+import type OrdersStatus from '$lib/types/OrdersStatus'
 import {
   runtimeDataStore,
   type RuntimeDataStore
@@ -37,16 +39,26 @@ const sortForBoard = (a: OrderStateType, b: OrderStateType) => {
 
 export class OrdersStore {
   public userStore: UserStore
+  private foodServiceApi: FoodServiceApi
+  private ordersStatus?: OrdersStatus = $state()
 
   constructor (
     private dataRepository: RuntimeDataStore<RuntimeDataType>,
-    userStore: UserStore
+    userStore: UserStore,
+    foodServiceApi: FoodServiceApi
   ) {
     this.userStore = userStore
+    this.foodServiceApi = foodServiceApi
+  }
+
+  public async fetch () {
+    this.ordersStatus = await this.foodServiceApi.fetchOrders()
   }
 
   public ordersProgress = $derived.by(() => {
-    const ordersStatus = this.dataRepository.data.ordersStatus
+    const ordersStatus =
+      this.dataRepository.data.ordersStatus ?? this.ordersStatus
+
     const userOrderId = this.userStore.orderId?.toString() ?? ''
 
     const inProgress = ordersStatus?.inProgress ?? []
@@ -59,4 +71,8 @@ export class OrdersStore {
   })
 }
 
-export const ordersStore = new OrdersStore(runtimeDataStore, userStore)
+export const ordersStore = new OrdersStore(
+  runtimeDataStore,
+  userStore,
+  foodServiceApi
+)

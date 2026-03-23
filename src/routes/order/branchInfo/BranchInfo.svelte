@@ -3,10 +3,10 @@
 
 	const app = getAppContext();
 
-	let branch = app.branch.info;
+	let branch = $derived(app.branch.info);
 
 	$effect(() => {
-		app.user.fetch();
+		app.branch.fetch();
 	});
 </script>
 

@@ -5,16 +5,14 @@ import type {
   IHttpClientRequest,
   IHttpClientResponse
 } from './IHttpClient'
+import { attachToken } from './interceptors/attachToken'
 
-/*
-    TODO:
-    - Implement cache and test it
-*/
 class AxiosHttpClient implements IHttpClient {
   private instance: AxiosInstance
 
   constructor (options: IHttpClientOptions) {
     this.instance = axios.create(options)
+    this.instance.interceptors.request.use(attachToken)
   }
 
   public async request<T> (

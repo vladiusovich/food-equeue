@@ -4,7 +4,7 @@ import { AuthStore, authStore } from './auth.svelte'
 
 export class UserStore {
   private foodServiceApi: FoodServiceApi
-  private auth: AuthStore
+  public auth: AuthStore
   private orderInfo?: CustomerOrderInfo = $state()
 
   constructor (auth: AuthStore, foodServiceApi: FoodServiceApi) {

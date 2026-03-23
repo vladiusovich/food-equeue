@@ -3,10 +3,10 @@ import type FoodServiceApi from '$lib/api/requests/FoodServiceApi'
 import { userStore, type UserStore } from './user.svelte'
 
 export class BranchStore {
-  private userStore: UserStore
-  private foodServiceApi: FoodServiceApi
   public info?: Branch = $state()
   public loading = $state(false)
+  private userStore: UserStore
+  private foodServiceApi: FoodServiceApi
 
   constructor (userStore: UserStore, foodServiceApi: FoodServiceApi) {
     this.userStore = userStore
@@ -16,10 +16,12 @@ export class BranchStore {
   async fetch (): Promise<void> {
     this.loading = true
     await this.userStore.fetch()
-    await this.foodServiceApi.fetchBranches({
+
+    this.info = await this.foodServiceApi.fetchBranches({
       id: `${this.userStore?.branchId ?? ''}`
     })
-    this.loading = false;
+
+    this.loading = false
   }
 }
 

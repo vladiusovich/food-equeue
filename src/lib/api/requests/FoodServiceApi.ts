@@ -1,4 +1,5 @@
 import type { IdentityCustomerInfo } from '$lib/types/customer/IdentityCustomerInfo'
+import type OrdersStatus from '$lib/types/OrdersStatus'
 import apiUrls from '../core/apiUrls'
 import HttpClient from '../core/httpClient/AxiosHttpClient'
 import type { IHttpClient } from '../core/httpClient/IHttpClient'
@@ -43,7 +44,7 @@ class FoodServiceApi {
   }
 
   public async fetchOrders () {
-    const d = await this.httpClient.request<object>({
+    const d = await this.httpClient.request<OrdersStatus>({
       method: 'GET',
       url: '/orders'
     })

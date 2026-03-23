@@ -1,11 +1,14 @@
 <script lang="ts">
 	import "../app.css";
+	import { goto } from "$app/navigation";
 	import favicon from "$lib/assets/favicon.svg";
-	import { initAppContext } from "$lib/stores";
+	import { getAppContext, initAppContext } from "$lib/stores";
 
 	let { children } = $props();
 
 	initAppContext();
+
+	const app = getAppContext();
 </script>
 
 <svelte:head>
