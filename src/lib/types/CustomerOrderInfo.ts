@@ -1,5 +1,5 @@
 interface CustomerOrderInfo {
-  orderId: number
-  branchId: number
-  status: string
+    orderId: number;
+    branchId: number;
+    status: string;
 }

@@ -1,7 +1,7 @@
-import Tabs from './tabs/Tabs.svelte'
+import Tabs from "./tabs/Tabs.svelte";
 
 const UI = {
-  Tabs
-}
+    Tabs,
+};
 
-export default UI
+export default UI;

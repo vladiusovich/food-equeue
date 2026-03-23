@@ -1,5 +1,5 @@
-import FoodServiceApi from './FoodServiceApi'
+import FoodServiceApi from "./FoodServiceApi";
 
-const foodServiceApi = new FoodServiceApi()
+const foodServiceApi = new FoodServiceApi();
 
-export default foodServiceApi
+export default foodServiceApi;

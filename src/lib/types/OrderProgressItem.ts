@@ -1,5 +1,5 @@
 export interface OrderProgressItem {
-  id: string | number
+    id: string | number;
 
-  isCurrent: boolean
+    isCurrent: boolean;
 }

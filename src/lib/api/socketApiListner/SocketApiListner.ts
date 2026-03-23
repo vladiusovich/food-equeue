@@ -1,45 +1,45 @@
-import type { CustomerEventType } from '$lib/types/events/CustomerEventType'
-import { Socket } from 'socket.io-client'
+import type { CustomerEventType } from "$lib/types/events/CustomerEventType";
+import { Socket } from "socket.io-client";
 
-type EventHandlerType = (data: any) => void
+type EventHandlerType = (data: any) => void;
 
 export type SocketEventHandlersType = Partial<
-  Record<CustomerEventType, EventHandlerType>
->
+    Record<CustomerEventType, EventHandlerType>
+>;
 
 class SocketApiListner {
-  constructor (
-    private socket: Socket,
-    private handlers: SocketEventHandlersType
-  ) {
-    this.initSocket()
-  }
+    constructor(
+        private socket: Socket,
+        private handlers: SocketEventHandlersType,
+    ) {
+        this.initSocket();
+    }
 
-  private initSocket () {
-    this.socket.on('connect', this.handleConnect)
-    this.socket.on('disconnect', this.handleDisconnect)
-    this.initEventHandlers()
-  }
+    private initSocket() {
+        this.socket.on("connect", this.handleConnect);
+        this.socket.on("disconnect", this.handleDisconnect);
+        this.initEventHandlers();
+    }
 
-  private initEventHandlers () {
-    const keys = Object.keys(this.handlers) as CustomerEventType[]
+    private initEventHandlers() {
+        const keys = Object.keys(this.handlers) as CustomerEventType[];
 
-    keys.forEach(event => {
-      this.socket.on(event, (data: any) => this.handlers[event]?.(data))
-    })
-  }
+        keys.forEach((event) => {
+            this.socket.on(event, (data: any) => this.handlers[event]?.(data));
+        });
+    }
 
-  public get isConnected () {
-    return this.socket.connected
-  }
+    public get isConnected() {
+        return this.socket.connected;
+    }
 
-  private handleConnect = () => {
-    console.debug('Connected')
-  }
+    private handleConnect = () => {
+        console.debug("Connected");
+    };
 
-  private handleDisconnect = () => {
-    console.debug('Disconnected')
-  }
+    private handleDisconnect = () => {
+        console.debug("Disconnected");
+    };
 }
 
-export default SocketApiListner
+export default SocketApiListner;

@@ -1,11 +1,11 @@
-import type { BranchStore } from '../branch.svelte'
-import type { OrdersStore } from '../orders.svelte';
-import type { UserStore } from '../user.svelte'
+import type { BranchStore } from "../branch.svelte";
+import type { OrdersStore } from "../orders.svelte";
+import type { UserStore } from "../user.svelte";
 
 export interface AppStoreType {
-  user: UserStore
+    user: UserStore;
 
-  branch: BranchStore
+    branch: BranchStore;
 
-  orders: OrdersStore;
+    orders: OrdersStore;
 }

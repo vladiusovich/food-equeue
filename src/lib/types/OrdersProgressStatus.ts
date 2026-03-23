@@ -1,7 +1,7 @@
-import type { OrderProgressItem } from "./OrderProgressItem"
+import type { OrderProgressItem } from "./OrderProgressItem";
 
 export default interface OrdersProgressStatus {
-  inProgress: OrderProgressItem[]
+    inProgress: OrderProgressItem[];
 
-  ready: OrderProgressItem[]
+    ready: OrderProgressItem[];
 }
