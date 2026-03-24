@@ -2,10 +2,7 @@ import foodServiceApi from "$lib/api/requests";
 import type FoodServiceApi from "$lib/api/requests/FoodServiceApi";
 import type { RuntimeDataType } from "$lib/types/events/RuntimeDataType";
 import type OrdersStatus from "$lib/types/OrdersStatus";
-import {
-    runtimeDataStore,
-    type RuntimeDataStore
-} from "./runtimeDataStore.svelte";
+import { runtimeDataStore, type RuntimeDataStore } from "./runtimeDataStore.svelte";
 import { userStore, type UserStore } from "./user.svelte";
 
 type OrderStateType = {
@@ -13,10 +10,7 @@ type OrderStateType = {
     isCurrent: boolean;
 };
 
-const isCurrentUserOrder = (
-    orderId: string | number,
-    userOrderId: string | number
-) => orderId === userOrderId;
+const isCurrentUserOrder = (orderId: string | number, userOrderId: string | number) => orderId === userOrderId;
 
 const mapOrders = (orders: string[], userOrderId: string): OrderStateType[] => {
     return orders.map(order => ({
@@ -40,24 +34,24 @@ const sortForBoard = (a: OrderStateType, b: OrderStateType) => {
 export class OrdersStore {
     public userStore: UserStore;
     private foodServiceApi: FoodServiceApi;
-    private ordersStatus?: OrdersStatus = $state();
+    private ordersStatusData?: OrdersStatus = $state();
 
-    constructor (
-        private dataRepository: RuntimeDataStore<RuntimeDataType>,
-        userStore: UserStore,
-        foodServiceApi: FoodServiceApi
-    ) {
+    constructor (private dataRepository: RuntimeDataStore<RuntimeDataType>, userStore: UserStore, foodServiceApi: FoodServiceApi) {
         this.userStore = userStore;
         this.foodServiceApi = foodServiceApi;
     }
 
+    public isLoading = $state(false);
+
     public async fetch () {
-        this.ordersStatus = await this.foodServiceApi.fetchOrders();
+		this.isLoading = true;
+        this.ordersStatusData = await this.foodServiceApi.fetchOrders();
+		this.isLoading = false;
     }
 
-    public executionTime = $derived.by(
-        () => this.dataRepository.data?.executionTime
-    );
+    public executionTime = $derived.by(() => this.dataRepository.data?.executionTime);
+
+    public ordersStatus = $derived.by(() => this.dataRepository.data.ordersStatus ?? this.ordersStatusData);
 
     public orderIsReady = $derived.by(() => {
         const ordersProgress = this.ordersProgress;
@@ -66,13 +60,10 @@ export class OrdersStore {
     });
 
     public ordersProgress = $derived.by(() => {
-        const ordersStatus =
-            this.dataRepository.data.ordersStatus ?? this.ordersStatus;
-
         const userOrderId = this.userStore.orderId?.toString() ?? "";
 
-        const inProgress = ordersStatus?.inProgress ?? [];
-        const ready = ordersStatus?.ready ?? [];
+        const inProgress = this.ordersStatus?.inProgress ?? [];
+        const ready = this.ordersStatus?.ready ?? [];
 
         return {
             inProgress: mapOrders(inProgress, userOrderId).sort(sortForBoard),
@@ -81,8 +72,4 @@ export class OrdersStore {
     });
 }
 
-export const ordersStore = new OrdersStore(
-    runtimeDataStore,
-    userStore,
-    foodServiceApi
-);
+export const ordersStore = new OrdersStore(runtimeDataStore, userStore, foodServiceApi);

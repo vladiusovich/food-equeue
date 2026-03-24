@@ -11,9 +11,13 @@
     });
 </script>
 
-<UI.Card>
-    <h4 class="h4">{branch?.name}</h4>
-    <p class="text-xs">
-        {branch?.address}
-    </p>
-</UI.Card>
+{#if branch}
+    <UI.Card>
+        <h4 class="h4">{branch?.name}</h4>
+        <p class="text-xs">
+            {branch?.address}
+        </p>
+    </UI.Card>
+{:else}
+    <div class="placeholder rounded-xl animate-pulse w-full h-20"></div>
+{/if}

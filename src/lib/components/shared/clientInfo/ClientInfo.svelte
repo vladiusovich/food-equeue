@@ -5,28 +5,32 @@
     const app = getAppContext();
 </script>
 
-<div class="w-full" class:wobble={app.orders.orderIsReady}>
-    <UI.Card>
-        <div class="flex flex-col gap-3">
-            <div class="flex flex-col items-center">
-                <h6 class="h6">Your order</h6>
-                <h1 class="h1">
-                    {app.user.orderId}
-                </h1>
-            </div>
+{#if app.user.orderId}
+    <div class="w-full" class:wobble={app.orders.orderIsReady}>
+        <UI.Card>
+            <div class="flex flex-col gap-3">
+                <div class="flex flex-col items-center">
+                    <h6 class="h6">Your order</h6>
+                    <h1 class="h1">
+                        {app.user.orderId}
+                    </h1>
+                </div>
 
-            <div class="flex flex-col gap-1 items-center">
-                {#if app.orders.orderIsReady}
-                    <h6 class="h6">Your order is ready</h6>
-                    <p class="text-xs">Please pick up your order at the pick-up location</p>
-                {:else}
-                    <h6 class="h6">Processing...</h6>
-                    <p class="text-xs">Please wait</p>
-                {/if}
+                <div class="flex flex-col gap-1 items-center">
+                    {#if app.orders.orderIsReady}
+                        <h6 class="h6">Your order is ready</h6>
+                        <p class="text-xs">Please pick up your order at the pick-up location</p>
+                    {:else}
+                        <h6 class="h6">Processing...</h6>
+                        <p class="text-xs">Please wait</p>
+                    {/if}
+                </div>
             </div>
-        </div>
-    </UI.Card>
-</div>
+        </UI.Card>
+    </div>
+{:else}
+    <div class="placeholder rounded-xl animate-pulse w-full h-40"></div>
+{/if}
 
 <style>
     .wobble {
