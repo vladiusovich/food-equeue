@@ -4,7 +4,7 @@ import type { RuntimeDataType } from "$lib/types/events/RuntimeDataType";
 import type OrdersStatus from "$lib/types/OrdersStatus";
 import {
     runtimeDataStore,
-    type RuntimeDataStore,
+    type RuntimeDataStore
 } from "./runtimeDataStore.svelte";
 import { userStore, type UserStore } from "./user.svelte";
 
@@ -15,13 +15,13 @@ type OrderStateType = {
 
 const isCurrentUserOrder = (
     orderId: string | number,
-    userOrderId: string | number,
+    userOrderId: string | number
 ) => orderId === userOrderId;
 
 const mapOrders = (orders: string[], userOrderId: string): OrderStateType[] => {
-    return orders.map((order) => ({
+    return orders.map(order => ({
         id: order,
-        isCurrent: isCurrentUserOrder(order, userOrderId),
+        isCurrent: isCurrentUserOrder(order, userOrderId)
     }));
 };
 
@@ -42,18 +42,22 @@ export class OrdersStore {
     private foodServiceApi: FoodServiceApi;
     private ordersStatus?: OrdersStatus = $state();
 
-    constructor(
+    constructor (
         private dataRepository: RuntimeDataStore<RuntimeDataType>,
         userStore: UserStore,
-        foodServiceApi: FoodServiceApi,
+        foodServiceApi: FoodServiceApi
     ) {
         this.userStore = userStore;
         this.foodServiceApi = foodServiceApi;
     }
 
-    public async fetch() {
+    public async fetch () {
         this.ordersStatus = await this.foodServiceApi.fetchOrders();
     }
+
+    public executionTime = $derived.by(
+        () => this.dataRepository.data?.executionTime
+    );
 
     public ordersProgress = $derived.by(() => {
         const ordersStatus =
@@ -66,7 +70,7 @@ export class OrdersStore {
 
         return {
             inProgress: mapOrders(inProgress, userOrderId).sort(sortForBoard),
-            ready: mapOrders(ready, userOrderId).sort(sortForBoard),
+            ready: mapOrders(ready, userOrderId).sort(sortForBoard)
         };
     });
 }
@@ -74,5 +78,5 @@ export class OrdersStore {
 export const ordersStore = new OrdersStore(
     runtimeDataStore,
     userStore,
-    foodServiceApi,
+    foodServiceApi
 );

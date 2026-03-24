@@ -23,7 +23,7 @@
             }
         }
 
-        window.history.replaceState({}, "", window.location.pathname + window.location.hash);
+        // window.history.replaceState({}, "", window.location.pathname + window.location.hash);
     }
 </script>
 

@@ -24,7 +24,6 @@
     {#snippet chips()}
         <Chips />
     {/snippet}
-
     <UI.Tabs
         tabs={[
             {

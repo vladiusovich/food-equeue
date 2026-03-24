@@ -1,20 +1,26 @@
 <script lang="ts">
-	import "../app.css";
-	import { goto } from "$app/navigation";
-	import favicon from "$lib/assets/favicon.svg";
-	import { getAppContext, initAppContext } from "$lib/stores";
+    import "../app.css";
+    import favicon from "$lib/assets/favicon.svg";
+    import { getAppContext, initAppContext } from "$lib/stores";
+    import { page } from "$app/state";
+    import MenuBar from "$lib/components/shared/menuBar/MenuBar.svelte";
 
-	let { children } = $props();
+    let { children } = $props();
 
-	initAppContext();
+    initAppContext();
 
-	const app = getAppContext();
+    const app = getAppContext();
+    let isLoggedIn = $derived(app.user.auth.isLoggedIn);
 </script>
 
 <svelte:head>
-	<link rel="icon" href={favicon} />
+    <link rel="icon" href={favicon} />
 </svelte:head>
 
-<div id="app-shell">
-	{@render children()}
+<div id="app">
+    {@render children()}
 </div>
+
+{#if isLoggedIn && page.status === 200}
+    <MenuBar />
+{/if}
