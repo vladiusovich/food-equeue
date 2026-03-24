@@ -1,16 +1,13 @@
 <script lang="ts">
-    import { CircuitBoard, Circle } from "@lucide/svelte";
+    import { Grid3x2, Circle } from "@lucide/svelte";
     import UI from "$lib/components/ui";
 </script>
 
 <div class="pinned">
-<div>
-
-</div>
     <UI.Navigation
         links={[
             { label: "My Order", href: "/order", icon: Circle },
-            { label: "Online Board", href: "/board", icon: CircuitBoard },
+            { label: "Online Board", href: "/board", icon: Grid3x2 },
         ]}
     />
 </div>

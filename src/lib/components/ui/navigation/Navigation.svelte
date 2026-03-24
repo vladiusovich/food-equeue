@@ -17,7 +17,7 @@
 </script>
 
 <Navigation {...props} {layout} class="rounded-full">
-    <Navigation.Menu class="grid grid-cols-4 gap-2">
+    <Navigation.Menu class={`grid gap-2 grid-cols-${links.length}`}>
         {#each links as link (link)}
             {@const Icon = link.icon}
             <Navigation.TriggerAnchor href={link.href} class="rounded-full">
