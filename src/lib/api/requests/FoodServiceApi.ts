@@ -37,6 +37,7 @@ class FoodServiceApi {
         const d = await this.httpClient.request<IdentityCustomerInfo>({
             method: "POST",
             url: "/customer/auth/idenitify",
+            cacheTimeInSeconds: 60,
             data: request,
         });
 
@@ -46,6 +47,7 @@ class FoodServiceApi {
     public async fetchOrders() {
         const d = await this.httpClient.request<OrdersStatus>({
             method: "GET",
+            cacheTimeInSeconds: 60,
             url: "/orders",
         });
 
