@@ -1,9 +1,6 @@
 <script lang="ts">
     import { type IconProps } from "@lucide/svelte";
-    import {
-        Navigation,
-        type NavigationRootProps,
-    } from "@skeletonlabs/skeleton-svelte";
+    import { Navigation, type NavigationRootProps } from "@skeletonlabs/skeleton-svelte";
     import type { Component } from "svelte";
 
     interface Link {
@@ -23,7 +20,7 @@
     <Navigation.Menu class="grid grid-cols-4 gap-2">
         {#each links as link (link)}
             {@const Icon = link.icon}
-            <Navigation.TriggerAnchor href={link.href}>
+            <Navigation.TriggerAnchor href={link.href} class="rounded-full">
                 <Icon class="size-5" />
                 <Navigation.TriggerText>{link.label}</Navigation.TriggerText>
             </Navigation.TriggerAnchor>

@@ -59,6 +59,12 @@ export class OrdersStore {
         () => this.dataRepository.data?.executionTime
     );
 
+    public orderIsReady = $derived.by(() => {
+        const ordersProgress = this.ordersProgress;
+        const readyOrders = ordersProgress.ready ?? [];
+        return readyOrders.some(order => order.isCurrent);
+    });
+
     public ordersProgress = $derived.by(() => {
         const ordersStatus =
             this.dataRepository.data.ordersStatus ?? this.ordersStatus;

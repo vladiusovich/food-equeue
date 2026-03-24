@@ -1,7 +1,6 @@
 <script lang="ts">
     import BranchInfo from "$lib/components/shared/branchInfo/BranchInfo.svelte";
     import ClientInfo from "$lib/components/shared/clientInfo/ClientInfo.svelte";
-    import ClientOrderReady from "$lib/components/shared/clientOrderReady/ClientOrderReady.svelte";
     import ExecutionTimeInfo from "$lib/components/shared/executionTimeInfo/ExecutionTimeInfo.svelte";
     import QueueInfo from "$lib/components/shared/queueInfo/QueueInfo.svelte";
 </script>
@@ -10,6 +9,5 @@
     <BranchInfo />
     <ClientInfo />
 	<ExecutionTimeInfo />
-    <ClientOrderReady />
     <QueueInfo />
 </div>

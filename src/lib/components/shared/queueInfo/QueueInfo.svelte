@@ -1,4 +1,5 @@
 <script lang="ts">
+    import UI from "$lib/components/ui";
     import { getAppContext } from "$lib/stores";
     import QueueItem from "./QueueItem.svelte";
 
@@ -15,31 +16,15 @@
 </script>
 
 <div class="grid grid-cols-3 gap-2 w-full">
-    <!-- <div class="col-span-12">
-		ExecutionTimeInfo
-	</div> -->
+    <UI.Card>
+        <QueueItem title="Count" value={inProgress + ready} />
+    </UI.Card>
 
-    <div class="">
-        <div
-            class="card preset-filled-surface-100-900 border border-surface-200-800 w-full divide-surface-200-800 p-3"
-        >
-            <QueueItem title="Count" value={inProgress + ready} />
-        </div>
-    </div>
+    <UI.Card>
+        <QueueItem title="In progress" value={inProgress} />
+    </UI.Card>
 
-    <div class="">
-        <div
-            class="card preset-filled-surface-100-900 border border-surface-200-800 w-full divide-surface-200-800 p-3"
-        >
-            <QueueItem title="In progress" value={inProgress} />
-        </div>
-    </div>
-
-    <div class="">
-        <div
-            class="card preset-filled-surface-100-900 border border-surface-200-800 w-full divide-surface-200-800 p-3"
-        >
-            <QueueItem title="Ready" value={ready} />
-        </div>
-    </div>
+    <UI.Card>
+        <QueueItem title="Ready" value={ready} />
+    </UI.Card>
 </div>

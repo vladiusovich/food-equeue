@@ -1,4 +1,5 @@
 <script lang="ts">
+    import UI from "$lib/components/ui";
     import OrdersColumn from "./OrdersColumn.svelte";
     import OrderItem from "./OrderItem.svelte";
     import { getAppContext } from "$lib/stores";
@@ -12,7 +13,7 @@
     let ordersProgress = $derived(app.orders.ordersProgress);
 </script>
 
-<div class="card preset-filled-surface-100-900 border border-surface-200-800 w-full divide-surface-200-800 p-2">
+<UI.Card>
     <div class="grid grid-cols-2 gap-2">
         <OrdersColumn title="In progress">
             {#each ordersProgress.inProgress as order (order.id)}
@@ -26,4 +27,4 @@
             {/each}
         </OrdersColumn>
     </div>
-</div>
+</UI.Card>
