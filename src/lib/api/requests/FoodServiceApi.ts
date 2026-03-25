@@ -14,7 +14,7 @@ class FoodServiceApi {
         const d = await this.httpClient.request<Branch>({
             method: "GET",
             url: "/branches",
-            cacheTimeInSeconds: 60,
+            cacheTimeInSeconds: 3600,
             params: request,
         });
 
@@ -37,7 +37,6 @@ class FoodServiceApi {
         const d = await this.httpClient.request<IdentityCustomerInfo>({
             method: "POST",
             url: "/customer/auth/idenitify",
-            cacheTimeInSeconds: 60,
             data: request,
         });
 
