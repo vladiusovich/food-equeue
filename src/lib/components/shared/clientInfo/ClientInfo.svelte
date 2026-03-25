@@ -3,6 +3,10 @@
     import { getAppContext } from "$lib/stores";
 
     const app = getAppContext();
+
+    $effect(() => {
+        app.user.fetch();
+    });
 </script>
 
 {#if app.user.orderId}
