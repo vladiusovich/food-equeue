@@ -16,7 +16,7 @@
     let { links, layout = "bar", ...props }: Props = $props();
 </script>
 
-<Navigation {...props} {layout} class="rounded-full">
+<Navigation {...props} {layout} class="rounded-full border border-neutral-700">
     <Navigation.Menu class={`grid gap-2 grid-cols-${links.length}`}>
         {#each links as link (link)}
             {@const Icon = link.icon}

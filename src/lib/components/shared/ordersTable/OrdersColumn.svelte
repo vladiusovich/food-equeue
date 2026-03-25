@@ -1,6 +1,5 @@
 <script lang="ts">
     let { title, children } = $props();
-	let open = $state(false);
 </script>
 
 <div class="flex flex-col items-center gap-2 max-h-150 scroll-auto overflow-auto">

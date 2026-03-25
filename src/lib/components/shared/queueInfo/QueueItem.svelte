@@ -1,9 +1,4 @@
 <script lang="ts">
-    interface Props {
-        title: string;
-        value: number;
-    }
-
     let props = $props();
 </script>
 

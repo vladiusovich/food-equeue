@@ -38,5 +38,11 @@ body {
     min-height: 100dvh;
     max-width: 640px;
     margin-inline: auto;
+}
+
+#app-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     margin-bottom: 15px;
 }

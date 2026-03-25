@@ -18,9 +18,11 @@
 </svelte:head>
 
 <div id="app">
-    {@render children()}
-</div>
+    <div id="app-content">
+        {@render children()}
+    </div>
 
-{#if isLoggedIn && page.status === 200}
-    <MenuBar />
-{/if}
+    {#if isLoggedIn && page.status === 200}
+        <MenuBar />
+    {/if}
+</div>
