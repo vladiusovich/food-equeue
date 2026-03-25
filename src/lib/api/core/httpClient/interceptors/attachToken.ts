@@ -1,8 +1,6 @@
 import { ACCESS_TOKEN } from "$lib/const/authConstans";
 
-type InterceptorFuncType = (value: any) => Promise<any>;
-
-export const attachToken: InterceptorFuncType = (value: any) => {
+export const attachToken = (value: any): Promise<any> => {
     const token = localStorage.getItem(ACCESS_TOKEN);
 
     if (token) {

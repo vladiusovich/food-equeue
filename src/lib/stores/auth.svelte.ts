@@ -1,7 +1,7 @@
 import foodServiceApi from "$lib/api/requests";
 import type FoodServiceApi from "$lib/api/requests/FoodServiceApi";
 import { browser } from "$app/environment";
-import { ACCESS_TOKEN } from "$lib/const/authConstans";
+import { ACCESS_TOKEN, ORDER_HASH } from "$lib/const/authConstans";
 
 export class AuthStore {
     public hash = $derived("");
@@ -26,7 +26,7 @@ export class AuthStore {
 
             if (info) {
                 localStorage.setItem(ACCESS_TOKEN, info.access_token!);
-                localStorage.setItem("hash", hash);
+                localStorage.setItem(ORDER_HASH, hash);
 
                 this.hash = hash;
                 this.accessToken = info.access_token;
