@@ -9,7 +9,7 @@ async function bootstrap() {
     const seederService = app.get(SeederService);
     const configService = app.get(ConfigService);
 
-    const isDevelopment = configService.get<boolean>('isDev', false);
+    const isDevelopment = configService.get<boolean>('IS_DEV', false);
 
     if (isDevelopment) {
         await seederService.seed();
