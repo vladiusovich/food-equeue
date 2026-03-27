@@ -1,11 +1,16 @@
 {
   "name": "food-equeue",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm -w @food-equeue/web run dev\" \"npm -w @food-equeue/api run start\""
+  },
+  "dependencies": {
+    "concurrently": "^9.2.1"
+  }
 }
