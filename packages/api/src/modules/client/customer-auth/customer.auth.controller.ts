@@ -11,8 +11,8 @@ export class CustomerAuthController {
         private readonly customerAuthService: CustomerAuthService,
         @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger) { }
 
-    @Post("idenitify")
-    async idenitify(@Body() request: IdentifyCustomerOrderRequest): Promise<IdentifyCustomerOrderResponse> {
+    @Post("identify")
+    async identify(@Body() request: IdentifyCustomerOrderRequest): Promise<IdentifyCustomerOrderResponse> {
         const token = await this.customerAuthService.generateToken({ hash: request.hash });
 
         return {

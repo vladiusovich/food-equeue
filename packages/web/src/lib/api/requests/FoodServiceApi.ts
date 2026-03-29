@@ -31,12 +31,12 @@ class FoodServiceApi {
         return d.data;
     }
 
-    public async fetchCustomerIdenitify(request: {
+    public async fetchCustomerIdentify(request: {
         hash: string;
     }): Promise<IdentityCustomerInfo> {
         const d = await this.httpClient.request<IdentityCustomerInfo>({
             method: "POST",
-            url: "/customer/auth/idenitify",
+            url: "/customer/auth/identify",
             data: request,
         });
 

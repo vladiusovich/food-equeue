@@ -20,7 +20,7 @@ export class AuthStore {
 
     public async login (hash: string): Promise<void> {
         try {
-            const info = await this.foodServiceApi.fetchCustomerIdenitify({ hash });
+            const info = await this.foodServiceApi.fetchCustomerIdentify({ hash });
 
             if (info?.access_token) {
                 localStorage.setItem(ACCESS_TOKEN, info.access_token);
