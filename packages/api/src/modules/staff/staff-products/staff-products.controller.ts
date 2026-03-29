@@ -1,10 +1,10 @@
 import { Body, Controller, Delete, Get, Inject, ParseIntPipe, Post, Put, Query } from '@nestjs/common';
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { Logger } from "winston";
-import CreateProductRequest from './models/requesties/create-product.request';
 import { StaffProductsService } from './staff-products.service';
-import FindProductRequest from './models/requesties/find-product.request';
-import UpdateProductRequest from './models/requesties/update-product.request';
+import CreateProductRequest from './models/requests/create-product.request';
+import FindProductRequest from './models/requests/find-product.request';
+import UpdateProductRequest from './models/requests/update-product.request';
 
 @Controller('staff')
 export class StaffProductsController {

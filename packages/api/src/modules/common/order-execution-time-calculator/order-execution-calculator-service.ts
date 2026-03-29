@@ -4,7 +4,7 @@ import { LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { startOfToday, endOfToday } from 'date-fns';
-import { calculateAverage, calculateMedian } from './utility/culculator.helper';
+import { calculateAverage, calculateMedian } from './utility/calculator.helper';
 import { Order } from 'src/modules/client/orders/entities/order.entity';
 
 // TODO: move to config or DB

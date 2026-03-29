@@ -1,4 +1,4 @@
-import { calculateDeltaInMinutes, calculateMedian } from "./culculator.helper";
+import { calculateDeltaInMinutes, calculateMedian } from "./calculator.helper";
 
 describe('calculateDeltaInSeconds', () => {
     it('should return 0 if readyAt is undefined', () => {

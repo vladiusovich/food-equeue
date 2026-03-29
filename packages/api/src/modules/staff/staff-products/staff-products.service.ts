@@ -4,9 +4,9 @@ import { Repository } from 'typeorm';
 import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
 import { Logger } from 'winston';
 import { Product } from './entities/product.entity';
-import CreateProductRequest from './models/requesties/create-product.request';
-import FindProductRequest from './models/requesties/find-product.request';
-import UpdateProductRequest from './models/requesties/update-product.request';
+import CreateProductRequest from './models/requests/create-product.request';
+import FindProductRequest from './models/requests/find-product.request';
+import UpdateProductRequest from './models/requests/update-product.request';
 
 @Injectable()
 export class StaffProductsService {

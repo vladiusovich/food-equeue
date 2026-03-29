@@ -2,7 +2,7 @@ import { Body, Controller, Inject, Post } from "@nestjs/common";
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { Logger } from "winston";
 import { IdentifyCustomerOrderResponse } from "../customers/models/customer-order-info.response";
-import IdentifyCustomerOrderRequest from "../customers/models/requestes/Identify-customero-rder.request";
+import IdentifyCustomerOrderRequest from "../customers/models/requestes/Identify-customer-order.request";
 import { CustomerAuthService } from "./customer-auth.service";
 
 @Controller("customer/auth")
