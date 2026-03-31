@@ -5,8 +5,8 @@ import { Order } from './entities/order.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderCreatedListener } from './listeners/order-created.listener';
 import { OrderUpdatedListener } from './listeners/order-updated.listener';
-import { EventsGateway } from 'src/modules/common/events.gateway/events.gateway';
 import { CustomerAuthModule } from '../customer-auth/customer-auth.module';
+import { EventsGateway } from 'src/modules/events.gateway/events.gateway';
 
 @Module({
     imports: [

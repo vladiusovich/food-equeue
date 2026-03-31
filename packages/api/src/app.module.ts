@@ -11,10 +11,10 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { BranchModule } from './modules/branches/branches.module';
 import { QCodeModule } from './modules/staff/qr-code-generator/qr-code.generator.module';
 import { CustomersModule } from './modules/client/customers/customers.module';
-import { EventsGatewayModule } from './modules/common/events.gateway/events.gateway.module';
-import { OrderExecutionCalculatorModule } from './modules/common/order-execution-time-calculator/order-execution-calculator.module';
 import { CustomerAuthModule } from './modules/client/customer-auth/customer-auth.module';
 import envValidationScheme from './configurations/envValidationScheme';
+import { EventsGatewayModule } from './modules/events.gateway/events.gateway.module';
+import { OrderExecutionCalculatorModule } from './modules/order-execution-time-calculator/order-execution-calculator.module';
 
 @Module({
     imports: [

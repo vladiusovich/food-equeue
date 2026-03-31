@@ -9,7 +9,7 @@ import { Customer } from '../../client/customers/entities/customer.entity';
 import { OrderCreatedListener } from './listeners/order-created.listener';
 import { OrderUpdatedListener } from './listeners/order-updated.listener';
 import { Branch } from '../../branches/entities/branch.entity';
-import { EventsGateway } from 'src/modules/common/events.gateway/events.gateway';
+import { EventsGateway } from 'src/modules/events.gateway/events.gateway';
 
 @Module({
     imports: [
