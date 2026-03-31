@@ -9,7 +9,8 @@ import { CustomerAuthService } from "./customer-auth.service";
 export class CustomerAuthController {
     constructor(
         private readonly customerAuthService: CustomerAuthService,
-        @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger) { }
+        @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    ) {}
 
     @Post("identify")
     async identify(@Body() request: IdentifyCustomerOrderRequest): Promise<IdentifyCustomerOrderResponse> {

@@ -7,24 +7,24 @@ import { unauthorizeRedirect } from "./interceptors/unauthorizeRedirect";
 class AxiosHttpClient implements IHttpClient {
     private instance: AxiosCacheInstance;
 
-    constructor (options: IHttpClientOptions) {
+    constructor(options: IHttpClientOptions) {
         const axiosInstance = axios.create(options);
         /*
 			cache.methods
 			Default: ["get", "head"]
 		*/
         this.instance = setupCache(axiosInstance, {
-            enabled: false // no cache by default
+            enabled: false, // no cache by default
         });
 
         this.instance.interceptors.request.use(attachToken);
         this.instance.interceptors.response.use(undefined, unauthorizeRedirect);
     }
 
-    public async request<T> (config: IHttpClientRequest): Promise<IHttpClientResponse<T>> {
+    public async request<T>(config: IHttpClientRequest): Promise<IHttpClientResponse<T>> {
         const response = await this.instance.request<T>({
             ...config,
-            cache: config.cacheTimeInSeconds ? { enabled: true, ttl: config.cacheTimeInSeconds * 1000 } : false
+            cache: config.cacheTimeInSeconds ? { enabled: true, ttl: config.cacheTimeInSeconds * 1000 } : false,
         });
 
         return response;

@@ -1,24 +1,22 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { Logger } from 'winston';
-import { Product } from './entities/product.entity';
-import CreateProductRequest from './models/requests/create-product.request';
-import FindProductRequest from './models/requests/find-product.request';
-import UpdateProductRequest from './models/requests/update-product.request';
+import { Inject, Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { WINSTON_MODULE_PROVIDER } from "nest-winston";
+import { Logger } from "winston";
+import { Product } from "./entities/product.entity";
+import CreateProductRequest from "./models/requests/create-product.request";
+import FindProductRequest from "./models/requests/find-product.request";
+import UpdateProductRequest from "./models/requests/update-product.request";
 
 @Injectable()
 export class StaffProductsService {
-
     constructor(
         @InjectRepository(Product)
         private productsRepository: Repository<Product>,
 
         @Inject(WINSTON_MODULE_PROVIDER)
         private readonly logger: Logger,
-    ) { }
-
+    ) {}
 
     async find(request: FindProductRequest): Promise<Product[]> {
         const products = await this.productsRepository.find({
@@ -39,7 +37,6 @@ export class StaffProductsService {
 
     async create(product: CreateProductRequest): Promise<Product> {
         return await this.productsRepository.save({ ...product });
-
     }
 
     async update(product: UpdateProductRequest): Promise<Product> {

@@ -3,9 +3,7 @@ import { Socket } from "socket.io-client";
 
 type EventHandlerType = (data: any) => void;
 
-export type SocketEventHandlersType = Partial<
-    Record<CustomerEventType, EventHandlerType>
->;
+export type SocketEventHandlersType = Partial<Record<CustomerEventType, EventHandlerType>>;
 
 class SocketApiListner {
     constructor(

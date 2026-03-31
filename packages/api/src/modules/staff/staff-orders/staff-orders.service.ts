@@ -1,17 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { Logger } from 'winston';
-import { EventEmitter2 } from '@nestjs/event-emitter';
-import CreateOrderRequest from './models/requests/create-order.request';
-import { Order } from '../../client/orders/entities/order.entity';
-import { Customer } from '../../client/customers/entities/customer.entity';
-import { Product } from '../staff-products/entities/product.entity';
-import UpdateOrderRequest from './models/requests/update-order.request';
-import FindOrderRequest from './models/requests/find-order.request';
-import { formatPlainText, generateHash } from './utility/hash.generator';
-import { Branch } from '../../branches/entities/branch.entity';
+import { Inject, Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { In, Repository } from "typeorm";
+import { WINSTON_MODULE_PROVIDER } from "nest-winston";
+import { Logger } from "winston";
+import { EventEmitter2 } from "@nestjs/event-emitter";
+import CreateOrderRequest from "./models/requests/create-order.request";
+import { Order } from "../../client/orders/entities/order.entity";
+import { Customer } from "../../client/customers/entities/customer.entity";
+import { Product } from "../staff-products/entities/product.entity";
+import UpdateOrderRequest from "./models/requests/update-order.request";
+import FindOrderRequest from "./models/requests/find-order.request";
+import { formatPlainText, generateHash } from "./utility/hash.generator";
+import { Branch } from "../../branches/entities/branch.entity";
 
 @Injectable()
 export class OrdersStaffService {
@@ -30,7 +30,7 @@ export class OrdersStaffService {
 
         @Inject(WINSTON_MODULE_PROVIDER)
         private readonly logger: Logger,
-    ) { }
+    ) {}
 
     async find(request: FindOrderRequest): Promise<Order[]> {
         const orders = await this.ordersRepository.find({
@@ -50,15 +50,13 @@ export class OrdersStaffService {
         const newOrder = new Order();
 
         // Set customer if customerId is provided
-        newOrder.customer = request.customerId
-            ? await this.customersRepository.findOneBy({ id: request.customerId })
-            : null;
+        newOrder.customer = request.customerId ? await this.customersRepository.findOneBy({ id: request.customerId }) : null;
 
         const branch = await this.branchesRepository.findOneBy({ id: request.branchId });
 
         if (!branch) {
             throw new Error(`Branch with id ${request.branchId} not found`);
-        };
+        }
 
         // Set order status and products
         newOrder.status = "pending";
@@ -80,12 +78,10 @@ export class OrdersStaffService {
 
         this.logger.info(`Order created successfully: ${newOrder.id}`);
 
-        this.eventEmitter.emit(
-            "order.created",
-            {
-                orderId: createdOrder.id,
-                payload: createdOrder,
-            });
+        this.eventEmitter.emit("order.created", {
+            orderId: createdOrder.id,
+            payload: createdOrder,
+        });
 
         return createdOrder;
     }
@@ -105,12 +101,10 @@ export class OrdersStaffService {
             readyAt: order.status === "ready" ? new Date() : undefined,
         });
 
-        this.eventEmitter.emit(
-            "order.updated",
-            {
-                orderId: updatedOrder.id,
-                payload: updatedOrder,
-            });
+        this.eventEmitter.emit("order.updated", {
+            orderId: updatedOrder.id,
+            payload: updatedOrder,
+        });
 
         return updatedOrder;
     }

@@ -10,7 +10,8 @@ import { AccessTokenGuard } from "../customer-auth/guards/accessToken.guard";
 export class CustomerController {
     constructor(
         private readonly customerOrderService: CustomerOrderService,
-        @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger) { }
+        @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    ) {}
 
     @Post("order")
     async findOne(@Body() request: { hash: string }): Promise<CustomerOrderInfoResponse> {

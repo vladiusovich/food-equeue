@@ -6,6 +6,6 @@ const customerEvents = [
     "customer.orders.executionTimeChanged",
 ] as const;
 
-type CustomerEventType = typeof customerEvents[number];
+type CustomerEventType = (typeof customerEvents)[number];
 
 export default CustomerEventType;

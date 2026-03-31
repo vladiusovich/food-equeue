@@ -1,10 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { OnEvent } from '@nestjs/event-emitter';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { Logger } from 'winston';
-import { OrderCreatedEvent } from '../events/order-created.event';
-import { OrdersService } from '../orders.service';
-import { EventsGateway } from 'src/modules/events.gateway/events.gateway';
+import { Inject, Injectable } from "@nestjs/common";
+import { OnEvent } from "@nestjs/event-emitter";
+import { WINSTON_MODULE_PROVIDER } from "nest-winston";
+import { Logger } from "winston";
+import { OrderCreatedEvent } from "../events/order-created.event";
+import { OrdersService } from "../orders.service";
+import { EventsGateway } from "src/modules/events.gateway/events.gateway";
 
 @Injectable()
 export class OrderCreatedListener {
@@ -17,7 +17,7 @@ export class OrderCreatedListener {
 
         @Inject(OrdersService)
         private readonly ordersService: OrdersService,
-    ) { }
+    ) {}
 
     @OnEvent("order.created")
     async handleOrderCreatedEvent(event: OrderCreatedEvent) {

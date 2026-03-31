@@ -1,4 +1,3 @@
-
 export default interface StaffOrdersStatus {
     inProgress: string[];
 

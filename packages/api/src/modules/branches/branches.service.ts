@@ -1,10 +1,10 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { Logger } from 'winston';
-import { Branch } from './entities/branch.entity';
-import { Order } from '../client/orders/entities/order.entity';
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { WINSTON_MODULE_PROVIDER } from "nest-winston";
+import { Logger } from "winston";
+import { Branch } from "./entities/branch.entity";
+import { Order } from "../client/orders/entities/order.entity";
 
 @Injectable()
 export class BranchService {
@@ -14,7 +14,7 @@ export class BranchService {
 
         @Inject(WINSTON_MODULE_PROVIDER)
         private readonly logger: Logger,
-    ) { }
+    ) {}
 
     async getBranch(orderId: number): Promise<Branch> {
         const order = await this.ordersRepository.findOne({

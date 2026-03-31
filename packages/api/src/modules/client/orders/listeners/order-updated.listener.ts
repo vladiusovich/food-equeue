@@ -8,7 +8,7 @@ import { EventsGateway } from "src/modules/events.gateway/events.gateway";
 
 @Injectable()
 export class OrderUpdatedListener {
-    constructor (
+    constructor(
         @Inject(WINSTON_MODULE_PROVIDER)
         private readonly logger: Logger,
 
@@ -20,7 +20,7 @@ export class OrderUpdatedListener {
     ) {}
 
     @OnEvent("order.updated")
-    async handleOrderCreatedEvent (event: OrderCreatedEvent) {
+    async handleOrderCreatedEvent(event: OrderCreatedEvent) {
         this.logger.info(`Order ${event?.payload?.id} pushed`);
 
         const ordersStatus = await this.ordersService.getOrdersStatus();

@@ -15,28 +15,28 @@ export class EventsGateway implements OnGatewayInit, OnGatewayConnection, OnGate
     @WebSocketServer()
     server: Server;
 
-    constructor (
+    constructor(
         @Inject(WINSTON_MODULE_PROVIDER)
         private readonly logger: Logger,
     ) {}
 
-    afterInit (server: Server) {
+    afterInit(server: Server) {
         this.logger.verbose("WS Gateway initialized:", server);
     }
 
-    handleConnection (client: Socket): void {
+    handleConnection(client: Socket): void {
         this.logger.verbose(`Client connected: ${client.id}`);
     }
 
-    handleDisconnect (client: Socket): void {
+    handleDisconnect(client: Socket): void {
         this.logger.verbose(`Client disconnected: ${client.id}`);
     }
 
-    public emitCustomer (event: CustomerEventType, data: any) {
+    public emitCustomer(event: CustomerEventType, data: any) {
         this.server.emit(event, data);
     }
 
-    public emitStaff (event: StaffEventType, data: any) {
+    public emitStaff(event: StaffEventType, data: any) {
         this.server.emit(event, data);
     }
 }

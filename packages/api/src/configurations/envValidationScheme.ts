@@ -1,4 +1,4 @@
-import * as Joi from 'joi';
+import * as Joi from "joi";
 
 const envValidationScheme = Joi.object({
     PORT: Joi.number().required().default(3000),

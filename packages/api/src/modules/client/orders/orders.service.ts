@@ -1,12 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { Order } from './entities/order.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { Logger } from 'winston';
-import OrdersStatus from './interfaces/ordersStatus';
-import CustomerOrderStatus from './interfaces/customerOrderStatus';
-import tryFormatFullName from './utility/formatHelper';
+import { Inject, Injectable } from "@nestjs/common";
+import { Order } from "./entities/order.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { In, Repository } from "typeorm";
+import { WINSTON_MODULE_PROVIDER } from "nest-winston";
+import { Logger } from "winston";
+import OrdersStatus from "./interfaces/ordersStatus";
+import CustomerOrderStatus from "./interfaces/customerOrderStatus";
+import tryFormatFullName from "./utility/formatHelper";
 
 const getId = (order: Order): string => order.id.toString();
 
@@ -18,7 +18,7 @@ export class OrdersService {
 
         @Inject(WINSTON_MODULE_PROVIDER)
         private readonly logger: Logger,
-    ) { }
+    ) {}
 
     async getOrdersStatus(): Promise<OrdersStatus> {
         const orders = await this.ordersRepository.findBy({
@@ -47,7 +47,7 @@ export class OrdersService {
             id: order.id.toString(),
             status: order.status,
             products: order.products.map((item) => item.name),
-            customer: tryFormatFullName(order?.customer)
+            customer: tryFormatFullName(order?.customer),
         };
     }
 }

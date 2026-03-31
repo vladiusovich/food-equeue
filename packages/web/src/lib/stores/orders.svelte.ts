@@ -13,9 +13,9 @@ type OrderStateType = {
 const isCurrentUserOrder = (orderId: string | number, userOrderId: string | number) => orderId === userOrderId;
 
 const mapOrders = (orders: string[], userOrderId: string): OrderStateType[] => {
-    return orders.map(order => ({
+    return orders.map((order) => ({
         id: order,
-        isCurrent: isCurrentUserOrder(order, userOrderId)
+        isCurrent: isCurrentUserOrder(order, userOrderId),
     }));
 };
 
@@ -36,17 +36,21 @@ export class OrdersStore {
     private foodServiceApi: FoodServiceApi;
     private ordersStatusData?: OrdersStatus = $state();
 
-    constructor (private dataRepository: RuntimeDataStore<RuntimeDataType>, userStore: UserStore, foodServiceApi: FoodServiceApi) {
+    constructor(
+        private dataRepository: RuntimeDataStore<RuntimeDataType>,
+        userStore: UserStore,
+        foodServiceApi: FoodServiceApi,
+    ) {
         this.userStore = userStore;
         this.foodServiceApi = foodServiceApi;
     }
 
     public isLoading = $state(false);
 
-    public async fetch () {
-		this.isLoading = true;
+    public async fetch() {
+        this.isLoading = true;
         this.ordersStatusData = await this.foodServiceApi.fetchOrders();
-		this.isLoading = false;
+        this.isLoading = false;
     }
 
     public executionTime = $derived.by(() => this.dataRepository.data?.executionTime);
@@ -56,7 +60,7 @@ export class OrdersStore {
     public orderIsReady = $derived.by(() => {
         const ordersProgress = this.ordersProgress;
         const readyOrders = ordersProgress.ready ?? [];
-        return readyOrders.some(order => order.isCurrent);
+        return readyOrders.some((order) => order.isCurrent);
     });
 
     public ordersProgress = $derived.by(() => {
@@ -67,7 +71,7 @@ export class OrdersStore {
 
         return {
             inProgress: mapOrders(inProgress, userOrderId).sort(sortForBoard),
-            ready: mapOrders(ready, userOrderId).sort(sortForBoard)
+            ready: mapOrders(ready, userOrderId).sort(sortForBoard),
         };
     });
 }

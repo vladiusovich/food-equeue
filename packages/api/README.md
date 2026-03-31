@@ -1,4 +1,3 @@
-
 # Food eQueue
 
 eQueue is a web application designed to orchestrate queues within an organization with a medium to high number of customers in real time

@@ -11,7 +11,8 @@ import { AccessTokenGuard } from "../customer-auth/guards/accessToken.guard";
 export class OrdersController {
     constructor(
         private readonly ordersService: OrdersService,
-        @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger) { }
+        @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    ) {}
 
     @Get("")
     async getOrdersStatus(): Promise<OrdersStatus> {

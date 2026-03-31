@@ -4,12 +4,12 @@ import { Logger } from "winston";
 import { BranchService } from "./branches.service";
 import { Branch } from "./entities/branch.entity";
 
-@Controller('branches')
+@Controller("branches")
 export class BranchesController {
     constructor(
         private readonly brancesService: BranchService,
-        @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger) { }
-
+        @Inject(WINSTON_MODULE_PROVIDER) private readonly logger: Logger,
+    ) {}
 
     @Get("")
     async getBranch(@Query("id", ParseIntPipe) orderId: number): Promise<Branch> {

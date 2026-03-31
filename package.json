@@ -1,16 +1,18 @@
 {
-  "name": "food-equeue",
-  "version": "1.0.0",
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "workspaces": [
-    "packages/*"
-  ],
-  "scripts": {
-    "dev": "concurrently \"npm -w @food-equeue/web run dev\" \"npm -w @food-equeue/api run start\""
-  },
-  "devDependencies": {
-    "concurrently": "^9.2.1"
-  }
+    "name": "food-equeue",
+    "version": "1.0.0",
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "dev": "concurrently \"npm -w @food-equeue/web run dev\" \"npm -w @food-equeue/api run start\"",
+        "format:check": "prettier --check .",
+        "format:fix": "prettier --write ."
+    },
+    "devDependencies": {
+        "concurrently": "^9.2.1"
+    }
 }

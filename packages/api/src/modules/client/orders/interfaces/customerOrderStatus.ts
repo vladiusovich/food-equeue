@@ -1,4 +1,3 @@
-
 export default interface CustomerOrderStatus {
     customer?: string | null;
 

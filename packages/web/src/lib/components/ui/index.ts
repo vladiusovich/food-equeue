@@ -5,7 +5,7 @@ import Card from "./card/Card.svelte";
 const UI = {
     Tabs,
     Navigation,
-	Card,
+    Card,
 };
 
 export default UI;

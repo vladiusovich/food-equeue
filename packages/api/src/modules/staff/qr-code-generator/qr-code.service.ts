@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import * as qrcode from 'qrcode';
+import { Injectable } from "@nestjs/common";
+import * as qrcode from "qrcode";
 
 @Injectable()
 export class QrCodeService {
@@ -7,7 +7,7 @@ export class QrCodeService {
         try {
             return await qrcode.toDataURL(data);
         } catch (error) {
-            throw new Error('Failed to generate QR code.');
+            throw new Error("Failed to generate QR code.");
         }
     }
 }

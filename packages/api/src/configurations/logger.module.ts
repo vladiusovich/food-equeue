@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
-import { utilities as nestWinstonModuleUtilities, WinstonModule } from 'nest-winston';
-import * as winston from 'winston';
+import { Module } from "@nestjs/common";
+import { utilities as nestWinstonModuleUtilities, WinstonModule } from "nest-winston";
+import * as winston from "winston";
 
-const appName = 'GetStartedApp';
+const appName = "GetStartedApp";
 
 @Module({
     imports: [
@@ -19,8 +19,8 @@ const appName = 'GetStartedApp';
                     ),
                 }),
                 new winston.transports.File({
-                    filename: 'logs/application.log',
-                    level: 'info',
+                    filename: "logs/application.log",
+                    level: "info",
                     format: winston.format.combine(
                         winston.format.timestamp(),
                         winston.format.ms(),
@@ -28,12 +28,11 @@ const appName = 'GetStartedApp';
                             colors: true,
                             prettyPrint: true,
                         }),
-                        winston.format.prettyPrint()
+                        winston.format.prettyPrint(),
                     ),
-                })
+                }),
             ],
         }),
     ],
 })
-
-export class LoggerModule { }
+export class LoggerModule {}

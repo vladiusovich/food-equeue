@@ -1,0 +1,12 @@
+node_modules
+build
+dist
+log
+logs
+.svelte-kit
+.vscode
+package-lock.json
+
+*.log
+*.png
+*.jpg

@@ -1,11 +1,11 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { Logger } from 'winston';
-import { startOfToday, endOfToday } from 'date-fns';
-import { calculateAverage, calculateMedian } from './utility/calculator.helper';
-import { Order } from 'src/modules/client/orders/entities/order.entity';
+import { Inject, Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { LessThanOrEqual, MoreThanOrEqual, Repository } from "typeorm";
+import { WINSTON_MODULE_PROVIDER } from "nest-winston";
+import { Logger } from "winston";
+import { startOfToday, endOfToday } from "date-fns";
+import { calculateAverage, calculateMedian } from "./utility/calculator.helper";
+import { Order } from "src/modules/client/orders/entities/order.entity";
 
 // TODO: move to config or DB
 const DEFAULT_EXECUTION_TIME = 5;
@@ -18,8 +18,8 @@ export class OrderExecutionCalculatorService {
         private readonly orderRepository: Repository<Order>,
 
         @Inject(WINSTON_MODULE_PROVIDER)
-        private readonly logger: Logger
-    ) { }
+        private readonly logger: Logger,
+    ) {}
 
     async getAverage() {
         const readyOrders = await this.getReadyOrders();
@@ -49,11 +49,11 @@ export class OrderExecutionCalculatorService {
             where: {
                 createdAt: MoreThanOrEqual(start),
                 readyAt: LessThanOrEqual(end),
-                status: 'ready',
+                status: "ready",
             },
-            select: ['createdAt', 'readyAt'],
+            select: ["createdAt", "readyAt"],
         });
 
-        return orders.filter(order => order.readyAt);
+        return orders.filter((order) => order.readyAt);
     }
 }

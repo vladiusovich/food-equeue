@@ -1,15 +1,25 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, UpdateDateColumn, Column, ManyToMany, JoinTable, Index } from 'typeorm';
-import { Customer } from '../../customers/entities/customer.entity';
-import { Product } from '../../../staff/staff-products/entities/product.entity';
-import StatusType from '../types/StatusType';
-import { Branch } from 'src/modules/branches/entities/branch.entity';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    CreateDateColumn,
+    ManyToOne,
+    UpdateDateColumn,
+    Column,
+    ManyToMany,
+    JoinTable,
+    Index,
+} from "typeorm";
+import { Customer } from "../../customers/entities/customer.entity";
+import { Product } from "../../../staff/staff-products/entities/product.entity";
+import StatusType from "../types/StatusType";
+import { Branch } from "src/modules/branches/entities/branch.entity";
 
 @Entity()
 export class Order {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => Customer, customer => customer.orders, { nullable: true })
+    @ManyToOne(() => Customer, (customer) => customer.orders, { nullable: true })
     customer?: Customer | null;
 
     @Column()

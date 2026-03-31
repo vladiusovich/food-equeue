@@ -1,12 +1,12 @@
 // jwt.service.ts
-import { Inject, Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { JwtService as NestJwtService } from '@nestjs/jwt';
+import { Inject, Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { JwtService as NestJwtService } from "@nestjs/jwt";
 
 interface Token {
     accessToken: string;
     // refreshToken: string;
-};
+}
 
 @Injectable()
 export class CustomerAuthService {
@@ -14,7 +14,7 @@ export class CustomerAuthService {
         private readonly jwtService: NestJwtService,
         @Inject(ConfigService)
         private readonly configService: ConfigService,
-    ) { }
+    ) {}
 
     async generateToken(payload: any): Promise<Token> {
         const [accessToken] = await Promise.all([
@@ -41,7 +41,7 @@ export class CustomerAuthService {
 
     async validateRefreshToken(token: string): Promise<any> {
         return this.jwtService.verifyAsync(token, {
-            secret: this.configService.get<string>("JWT_REFRESH_EXPIRES_IN")
+            secret: this.configService.get<string>("JWT_REFRESH_EXPIRES_IN"),
         });
     }
 }

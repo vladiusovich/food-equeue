@@ -1,36 +1,36 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { Order } from '../../client/orders/entities/order.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Product } from '../../staff/staff-products/entities/product.entity';
-import { Customer } from '../../client/customers/entities/customer.entity';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { Logger } from 'winston';
-import { Branch } from '../../branches/entities/branch.entity';
+import { Inject, Injectable } from "@nestjs/common";
+import { Order } from "../../client/orders/entities/order.entity";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { Product } from "../../staff/staff-products/entities/product.entity";
+import { Customer } from "../../client/customers/entities/customer.entity";
+import { WINSTON_MODULE_PROVIDER } from "nest-winston";
+import { Logger } from "winston";
+import { Branch } from "../../branches/entities/branch.entity";
 
 const products = [
-    { id: 1, name: 'Item 1', price: 10 },
-    { id: 2, name: 'Item 2', price: 20 },
-    { id: 3, name: 'Item 3', price: 30 },
-    { id: 4, name: 'Item 4', price: 40 },
-    { id: 5, name: 'Item 5', price: 50 }
+    { id: 1, name: "Item 1", price: 10 },
+    { id: 2, name: "Item 2", price: 20 },
+    { id: 3, name: "Item 3", price: 30 },
+    { id: 4, name: "Item 4", price: 40 },
+    { id: 5, name: "Item 5", price: 50 },
 ];
 
 const branches = [
     {
         id: 1,
-        name: 'Chemi Chachapuri',
-        address: 'ვაჟა-ფშაველას გამზირი, Tbilisi',
-        description: 'Description random type of food',
+        name: "Chemi Chachapuri",
+        address: "ვაჟა-ფშაველას გამზირი, Tbilisi",
+        description: "Description random type of food",
         defaultOrderExecutionTime: 6,
         createdAt: new Date(),
         updatedAt: new Date(),
     },
     {
         id: 2,
-        name: 'Branch 2',
-        address: 'Address 2',
-        description: 'Description 2',
+        name: "Branch 2",
+        address: "Address 2",
+        description: "Description 2",
         defaultOrderExecutionTime: 7,
         createdAt: new Date(),
         updatedAt: new Date(),
@@ -53,9 +53,8 @@ export class SeederService {
         private readonly branchRepository: Repository<Branch>,
 
         @Inject(WINSTON_MODULE_PROVIDER)
-        private readonly logger: Logger
-    ) { }
-
+        private readonly logger: Logger,
+    ) {}
 
     async seed() {
         this.logger.info("Seeding data for dev env...");
@@ -76,8 +75,8 @@ export class SeederService {
         const customers = [
             {
                 id: 1,
-                firstName: 'John',
-                lastName: 'Doe',
+                firstName: "John",
+                lastName: "Doe",
             },
         ];
 
@@ -88,31 +87,31 @@ export class SeederService {
         const orders: Order[] = [
             {
                 id: 1,
-                status: 'pending',
+                status: "pending",
                 products: products,
-                createdAt: new Date('2024-07-03T15:10:32.554Z'),
+                createdAt: new Date("2024-07-03T15:10:32.554Z"),
                 updatedAt: new Date(),
                 branch: branches[0],
-                hash: 'hash1'
+                hash: "hash1",
             },
             {
                 id: 2,
-                status: 'pending',
+                status: "pending",
                 products: products,
-                createdAt: new Date('2024-07-03T15:21:12.554Z'),
+                createdAt: new Date("2024-07-03T15:21:12.554Z"),
                 updatedAt: new Date(),
                 branch: branches[0],
-                hash: 'hash2'
+                hash: "hash2",
             },
             {
                 id: 3,
-                status: 'pending',
+                status: "pending",
                 products: products,
-                createdAt: new Date('2024-07-03T15:19:32.554Z'),
+                createdAt: new Date("2024-07-03T15:19:32.554Z"),
                 updatedAt: new Date(),
                 branch: branches[0],
-                hash: 'hash3'
-            }
+                hash: "hash3",
+            },
         ];
 
         await this.orderRepository.save(orders);

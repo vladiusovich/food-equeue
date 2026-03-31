@@ -1,9 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { WINSTON_MODULE_PROVIDER } from 'nest-winston';
-import { Logger } from 'winston';
-import { Cron, CronExpression } from '@nestjs/schedule';
-import { OrderExecutionCalculatorService } from './order-execution-calculator-service';
-import { EventsGateway } from '../events.gateway/events.gateway';
+import { Inject, Injectable } from "@nestjs/common";
+import { WINSTON_MODULE_PROVIDER } from "nest-winston";
+import { Logger } from "winston";
+import { Cron, CronExpression } from "@nestjs/schedule";
+import { OrderExecutionCalculatorService } from "./order-execution-calculator-service";
+import { EventsGateway } from "../events.gateway/events.gateway";
 
 @Injectable()
 export class TaskCalculatorService {
@@ -14,8 +14,8 @@ export class TaskCalculatorService {
         @Inject(EventsGateway)
         private eventsGateway: EventsGateway,
         @Inject(WINSTON_MODULE_PROVIDER)
-        private readonly logger: Logger
-    ) { }
+        private readonly logger: Logger,
+    ) {}
 
     @Cron(CronExpression.EVERY_10_SECONDS)
     async calculateExecutionTime() {
