@@ -1,5 +1,4 @@
 <script>
-    import BranchInfo from "$lib/components/shared/branchInfo/BranchInfo.svelte";
     import ExecutionTimeInfo from "$lib/components/shared/executionTimeInfo/ExecutionTimeInfo.svelte";
     import OrdersTable from "$lib/components/shared/ordersTable/OrdersTable.svelte";
     import QueueInfo from "$lib/components/shared/queueInfo/QueueInfo.svelte";

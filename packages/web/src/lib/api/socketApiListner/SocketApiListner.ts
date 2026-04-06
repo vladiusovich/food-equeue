@@ -36,6 +36,7 @@ class SocketApiListner {
     };
 
     private handleDisconnect = () => {
+        this.socket.offAny();
         console.debug("Disconnected");
     };
 }

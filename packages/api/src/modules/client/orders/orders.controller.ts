@@ -2,7 +2,7 @@ import { Controller, Get, Inject, ParseIntPipe, Query, UseGuards } from "@nestjs
 import { OrdersService as OrdersService } from "src/modules/client/orders/orders.service";
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { Logger } from "winston";
-import OrdersStatus from "./interfaces/ordersStatus";
+import OrdersStatus from "../../share/types/OrdersStatus";
 import CustomerOrderStatus from "./interfaces/customerOrderStatus";
 import { AccessTokenGuard } from "../customer-auth/guards/accessToken.guard";
 

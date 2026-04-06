@@ -7,7 +7,6 @@ import {
     Column,
     ManyToMany,
     JoinTable,
-    Index,
 } from "typeorm";
 import { Customer } from "../../customers/entities/customer.entity";
 import { Product } from "../../../staff/staff-products/entities/product.entity";
