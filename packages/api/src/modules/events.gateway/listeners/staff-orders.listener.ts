@@ -4,7 +4,7 @@ import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { Logger } from "winston";
 import { OrderCreatedEvent } from "../types/order-created.event";
 import { OrdersStaffInfoService } from "../services/staff-orders-info.service";
-import { EventsGateway } from "src/modules/events.gateway/events.gateway";
+import { AdminGateway } from "../admin.gateway";
 
 @Injectable()
 export class StaffOrdersListener {
@@ -12,8 +12,8 @@ export class StaffOrdersListener {
         @Inject(WINSTON_MODULE_PROVIDER)
         private readonly logger: Logger,
 
-        @Inject(EventsGateway)
-        private eventsGateway: EventsGateway,
+        @Inject(AdminGateway)
+        private eventsGateway: AdminGateway,
 
         @Inject(OrdersStaffInfoService)
         private readonly ordersStaffInfoService: OrdersStaffInfoService,
@@ -25,7 +25,7 @@ export class StaffOrdersListener {
 
         const ordersStatus = await this.ordersStaffInfoService.getOrdersStatus();
 
-        this.eventsGateway.emitStaff("staff.orders.updated", ordersStatus);
+        this.eventsGateway.emit("staff.orders.updated", ordersStatus);
     }
 
 
@@ -35,6 +35,6 @@ export class StaffOrdersListener {
 
         const ordersStatus = await this.ordersStaffInfoService.getOrdersStatus();
 
-        this.eventsGateway.emitStaff("staff.orders.updated", ordersStatus);
+        this.eventsGateway.emit("staff.orders.updated", ordersStatus);
     }
 }

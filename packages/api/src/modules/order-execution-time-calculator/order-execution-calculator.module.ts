@@ -1,11 +1,11 @@
 import { Module } from "@nestjs/common";
 import { OrderExecutionCalculatorService } from "./order-execution-calculator-service";
-import { EventsGateway } from "../events.gateway/events.gateway";
+import { CustomersGateway } from "../events.gateway/customers.gateway";
 import { TaskCalculatorService } from "./task-calculator-service";
 import { OrdersModule } from "src/modules/client/orders/orders.module";
 
 @Module({
     imports: [OrdersModule],
-    providers: [OrderExecutionCalculatorService, EventsGateway, TaskCalculatorService],
+    providers: [OrderExecutionCalculatorService, CustomersGateway, TaskCalculatorService],
 })
 export class OrderExecutionCalculatorModule {}

@@ -3,7 +3,7 @@ import { branchStore } from "./branch.svelte";
 import type { AppStoreType } from "./types/AppStoreType";
 import { userStore } from "./user.svelte";
 import { ordersStore } from "./orders.svelte";
-import SocketApiListner, { type SocketEventHandlersType } from "$lib/api/socketApiListner/SocketApiListner";
+import MessagesApiProvider, { type SocketEventHandlersType } from "$lib/api/socketApiListner/MessagesApiProvider";
 import { io } from "socket.io-client";
 import { runtimeDataStore } from "./runtimeDataStore.svelte";
 
@@ -12,9 +12,9 @@ const socketEventHandlers: SocketEventHandlersType = {
     "customer.orders.executionTimeChanged": (data) => runtimeDataStore.setData("executionTime", data),
 };
 
-const socket = io("http://192.168.100.11:3002");
+const socket = io("http://192.168.100.11:3002/customers");
 
-new SocketApiListner(socket, socketEventHandlers);
+const messagesApiProvider = new MessagesApiProvider(socket, socketEventHandlers);
 
 const appStore: AppStoreType = {
     user: userStore,

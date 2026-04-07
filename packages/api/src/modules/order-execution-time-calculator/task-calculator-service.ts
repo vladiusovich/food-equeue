@@ -3,7 +3,7 @@ import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { Logger } from "winston";
 import { Cron, CronExpression } from "@nestjs/schedule";
 import { OrderExecutionCalculatorService } from "./order-execution-calculator-service";
-import { EventsGateway } from "../events.gateway/events.gateway";
+import { CustomersGateway } from "../events.gateway/customers.gateway";
 
 @Injectable()
 export class TaskCalculatorService {
@@ -11,8 +11,8 @@ export class TaskCalculatorService {
         @Inject(OrderExecutionCalculatorService)
         private readonly orderExecutionCalculatorService: OrderExecutionCalculatorService,
 
-        @Inject(EventsGateway)
-        private eventsGateway: EventsGateway,
+        @Inject(CustomersGateway)
+        private eventsGateway: CustomersGateway,
         @Inject(WINSTON_MODULE_PROVIDER)
         private readonly logger: Logger,
     ) {}
@@ -21,7 +21,7 @@ export class TaskCalculatorService {
     async calculateExecutionTime() {
         const executionTime = await this.orderExecutionCalculatorService.getAverage();
 
-        this.eventsGateway.emitCustomer("customer.orders.executionTimeChanged", executionTime);
-        this.eventsGateway.emitStaff("staff.orders.executionTimeChanged", executionTime);
+        this.eventsGateway.emit("customer.orders.executionTimeChanged", executionTime);
+        // this.eventsGateway.emitStaff("staff.orders.executionTimeChanged", executionTime);
     }
 }

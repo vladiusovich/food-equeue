@@ -3,7 +3,7 @@ import { OnEvent } from "@nestjs/event-emitter";
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { Logger } from "winston";
 import { OrderCreatedEvent } from "../../client/orders/events/order-created.event";
-import { EventsGateway } from "src/modules/events.gateway/events.gateway";
+import { CustomersGateway } from "src/modules/events.gateway/customers.gateway";
 import { CustomerOrdersService } from "../services/customer-orders.service";
 
 @Injectable()
@@ -12,20 +12,21 @@ export class CustomerOrdersListener {
         @Inject(WINSTON_MODULE_PROVIDER)
         private readonly logger: Logger,
 
-        @Inject(EventsGateway)
-        private eventsGateway: EventsGateway,
+        @Inject(CustomersGateway)
+        private eventsGateway: CustomersGateway,
 
         @Inject(CustomerOrdersService)
         private readonly ordersService: CustomerOrdersService,
     ) {}
 
+    // TODO: events name as const
     @OnEvent("order.updated")
     async handleOrderUpdatedEvent (event: OrderCreatedEvent) {
         this.logger.info(`Order ${event?.payload?.id} pushed`);
 
         const ordersStatus = await this.ordersService.getOrdersStatus();
 
-        this.eventsGateway.emitCustomer("customer.orders.updated", ordersStatus);
+        this.eventsGateway.emit("customer.orders.updated", ordersStatus);
     }
 
     @OnEvent("order.created")
@@ -34,6 +35,6 @@ export class CustomerOrdersListener {
 
         const ordersStatus = await this.ordersService.getOrdersStatus();
 
-        this.eventsGateway.emitCustomer("customer.orders.updated", ordersStatus);
+        this.eventsGateway.emit("customer.orders.updated", ordersStatus);
     }
 }
