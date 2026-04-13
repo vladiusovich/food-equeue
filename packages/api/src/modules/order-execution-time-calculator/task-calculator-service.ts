@@ -17,11 +17,11 @@ export class TaskCalculatorService {
         private readonly logger: Logger,
     ) {}
 
+    // TODO: reimplement
     @Cron(CronExpression.EVERY_10_SECONDS)
     async calculateExecutionTime() {
         const executionTime = await this.orderExecutionCalculatorService.getAverage();
 
-        this.eventsGateway.emit("customer.orders.executionTimeChanged", executionTime);
-        // this.eventsGateway.emitStaff("staff.orders.executionTimeChanged", executionTime);
+        this.eventsGateway.server.emit("customer.orders.executionTimeChanged", executionTime);
     }
 }

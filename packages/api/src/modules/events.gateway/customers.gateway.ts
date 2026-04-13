@@ -3,7 +3,6 @@ import {
     MessageBody,
     OnGatewayConnection,
     OnGatewayDisconnect,
-    OnGatewayInit,
     SubscribeMessage,
     WebSocketGateway,
     WebSocketServer,
@@ -22,18 +21,14 @@ import CUSTOMER_EVENTS from "./constants/customer.events";
     },
     namespace: "customers",
 })
-export class CustomersGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
+export class CustomersGateway implements OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer()
-    server: Server;
+    server!: Server;
 
     constructor (
         @Inject(WINSTON_MODULE_PROVIDER)
         private readonly logger: Logger,
     ) {}
-
-    afterInit (server: Server) {
-        this.logger.info("WS Gateway initialized:", server);
-    }
 
     handleConnection (client: Socket): void {
         this.logger.info(`Client connected: ${client.id}`);
@@ -46,15 +41,10 @@ export class CustomersGateway implements OnGatewayInit, OnGatewayConnection, OnG
     @SubscribeMessage(CUSTOMER_EVENTS.USER_JOIN)
     handleJoin (@MessageBody() data: { branchId: string }, @ConnectedSocket() client: Socket): string {
         this.logger.info(`Client try to join:  ${client.id}`);
-        const route = createRoute([ROOMS.BRANCH, data.branchId]);
-        this.server.socketsJoin(route);
+
+        this.server.socketsJoin(createRoute([ROOMS.BRANCH, data.branchId]));
 
         // TODO
         return "ok";
-    }
-
-    public emit (event: string, data: any) {
-        const route = createRoute([ROOMS.BRANCH, "123"]);
-        this.server.to(route).emit(event, data);
     }
 }

@@ -5,6 +5,8 @@ import { Logger } from "winston";
 import { OrderCreatedEvent } from "../../client/orders/events/order-created.event";
 import { CustomersGateway } from "src/modules/events.gateway/customers.gateway";
 import { CustomerOrdersService } from "../services/customer-orders.service";
+import { createRoute } from "../utils/rooms.routing";
+import ROOMS from "../constants/rooms";
 
 @Injectable()
 export class CustomerOrdersListener {
@@ -22,19 +24,19 @@ export class CustomerOrdersListener {
     // TODO: events name as const
     @OnEvent("order.updated")
     async handleOrderUpdatedEvent (event: OrderCreatedEvent) {
-        this.logger.info(`Order ${event?.payload?.id} pushed`);
+        this.logger.info(`Order ${event?.id} pushed`);
 
         const ordersStatus = await this.ordersService.getOrdersStatus();
 
-        this.eventsGateway.emit("customer.orders.updated", ordersStatus);
+        this.eventsGateway.server.to(createRoute([ROOMS.BRANCH, event.branch.id])).emit("customer.orders.updated", ordersStatus);
     }
 
     @OnEvent("order.created")
     async handleOrderCreatedEvent (event: OrderCreatedEvent) {
-        this.logger.info(`Order ${event.payload.id} pushed`);
+        this.logger.info(`Order ${event.id} pushed`);
 
         const ordersStatus = await this.ordersService.getOrdersStatus();
 
-        this.eventsGateway.emit("customer.orders.updated", ordersStatus);
+        this.eventsGateway.server.to(createRoute([ROOMS.BRANCH, event.branch.id])).emit("customer.orders.updated", ordersStatus);
     }
 }

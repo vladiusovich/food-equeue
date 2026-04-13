@@ -2,7 +2,7 @@
     import { onMount } from "svelte";
     import { goto } from "$app/navigation";
     import { page } from "$app/state";
-    import { getAppContext } from "$lib/stores";
+    import { getAppContext } from "$lib/stores/index.svelte";
 
     let hash: string | null;
     const app = getAppContext();

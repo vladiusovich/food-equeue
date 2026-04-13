@@ -1,6 +1,6 @@
 <script lang="ts">
     import UI from "$lib/components/ui";
-    import { getAppContext } from "$lib/stores";
+    import { getAppContext } from "$lib/stores/index.svelte";
 
     const app = getAppContext();
     let executionTime = $derived(app.orders.executionTime);

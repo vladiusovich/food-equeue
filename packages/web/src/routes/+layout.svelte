@@ -1,9 +1,9 @@
 <script lang="ts">
     import "../app.css";
     import favicon from "$lib/assets/favicon.svg";
-    import { getAppContext, initAppContext } from "$lib/stores";
     import { page } from "$app/state";
     import MenuBar from "$lib/components/shared/menuBar/MenuBar.svelte";
+    import { getAppContext, initAppContext } from "$lib/stores/index.svelte";
 
     let { children } = $props();
 

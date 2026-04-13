@@ -1,5 +1,3 @@
-import type { RuntimeDataType } from "$lib/types/events/RuntimeDataType";
-
 export class RuntimeDataStore<T extends object> {
     public data: T = $state({} as T);
 
@@ -8,4 +6,4 @@ export class RuntimeDataStore<T extends object> {
     }
 }
 
-export const runtimeDataStore = new RuntimeDataStore<RuntimeDataType>();
+export default RuntimeDataStore;

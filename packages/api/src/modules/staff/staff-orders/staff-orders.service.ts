@@ -15,7 +15,7 @@ import { Branch } from "../../branches/entities/branch.entity";
 
 @Injectable()
 export class OrdersStaffService {
-    constructor(
+    constructor (
         private eventEmitter: EventEmitter2,
         @InjectRepository(Order)
         private ordersRepository: Repository<Order>,
@@ -32,7 +32,7 @@ export class OrdersStaffService {
         private readonly logger: Logger,
     ) {}
 
-    async find(request: FindOrderRequest): Promise<Order[]> {
+    async find (request: FindOrderRequest): Promise<Order[]> {
         const orders = await this.ordersRepository.find({
             relations: {
                 customer: true,
@@ -46,7 +46,7 @@ export class OrdersStaffService {
         return orders ?? [];
     }
 
-    async create(request: CreateOrderRequest): Promise<Order> {
+    async create (request: CreateOrderRequest): Promise<Order> {
         const newOrder = new Order();
 
         // Set customer if customerId is provided
@@ -76,19 +76,23 @@ export class OrdersStaffService {
 
         await this.ordersRepository.save(createdOrder);
 
-        this.logger.info(`Order created successfully: ${newOrder.id}`);
+        this.logger.info(`Order created successfully: ${createdOrder.id}`);
 
-        this.eventEmitter.emit("order.created", {
-            orderId: createdOrder.id,
-            payload: createdOrder,
-        });
+        this.eventEmitter.emit("order.created", { ...newOrder, id: createdOrder.id });
 
         return createdOrder;
     }
 
-    async update(order: UpdateOrderRequest): Promise<Order> {
-        const toUpdateOrder = await this.ordersRepository.findOneBy({
-            id: order.id,
+    async update (order: UpdateOrderRequest): Promise<Order> {
+        const toUpdateOrder = await this.ordersRepository.findOne({
+            relations: {
+                customer: true,
+                products: true,
+                branch: true,
+            },
+            where: {
+                id: order.id,
+            },
         });
 
         if (!toUpdateOrder) {
@@ -101,10 +105,7 @@ export class OrdersStaffService {
             readyAt: order.status === "ready" ? new Date() : undefined,
         });
 
-        this.eventEmitter.emit("order.updated", {
-            orderId: updatedOrder.id,
-            payload: updatedOrder,
-        });
+        this.eventEmitter.emit("order.updated", { ...toUpdateOrder, updatedOrder });
 
         return updatedOrder;
     }

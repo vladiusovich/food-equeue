@@ -13,7 +13,7 @@ import { Inject } from "@nestjs/common";
 })
 export class AdminGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     @WebSocketServer()
-    server: Server;
+    server!: Server;
 
     constructor (
         @Inject(WINSTON_MODULE_PROVIDER)
@@ -30,9 +30,5 @@ export class AdminGateway implements OnGatewayInit, OnGatewayConnection, OnGatew
 
     handleDisconnect (client: Socket): void {
         this.logger.verbose(`Admin disconnected: ${client.id}`);
-    }
-
-    public emit (event: string, data: any) {
-        this.server.emit(event, data);
     }
 }

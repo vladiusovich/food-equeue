@@ -44,4 +44,4 @@ export class AuthStore {
     }
 }
 
-export const authStore = new AuthStore(foodServiceApi);
+export default AuthStore;

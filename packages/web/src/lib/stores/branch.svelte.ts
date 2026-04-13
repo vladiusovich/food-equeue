@@ -1,19 +1,18 @@
-import foodServiceApi from "$lib/api/requests";
 import type FoodServiceApi from "$lib/api/requests/FoodServiceApi";
-import { userStore, type UserStore } from "./user.svelte";
+import { type UserStore } from "./user.svelte";
 
 export class BranchStore {
-    public info?: Branch = $state();
+    public info = $state<Branch | undefined>(undefined);
     public loading = $state(false);
     private userStore: UserStore;
     private foodServiceApi: FoodServiceApi;
 
-    constructor(userStore: UserStore, foodServiceApi: FoodServiceApi) {
+    constructor (userStore: UserStore, foodServiceApi: FoodServiceApi, ) {
         this.userStore = userStore;
         this.foodServiceApi = foodServiceApi;
     }
 
-    async fetch(): Promise<void> {
+    async fetch (): Promise<void> {
         this.loading = true;
         await this.userStore.fetch();
 
@@ -25,4 +24,4 @@ export class BranchStore {
     }
 }
 
-export const branchStore = new BranchStore(userStore, foodServiceApi);
+export default BranchStore;

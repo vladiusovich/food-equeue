@@ -18,12 +18,13 @@ export class OrderCreatedListener {
         private readonly orderExecutionCalculatorService: OrderExecutionCalculatorService,
     ) {}
 
+    // TODO: reimplement
     @OnEvent("order.updated")
     async handleOrderCreatedEvent () {
         this.logger.info(`Calculate order execution time`);
 
         const expirationTime = await this.orderExecutionCalculatorService.getAverage();
 
-        this.eventsGateway.emit("customer.orders.executionTimeChanged", expirationTime);
+        this.eventsGateway.server.emit("customer.orders.executionTimeChanged", expirationTime);
     }
 }

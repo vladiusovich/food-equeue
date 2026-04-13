@@ -2,7 +2,7 @@
     import UI from "$lib/components/ui";
     import OrdersColumn from "./OrdersColumn.svelte";
     import OrderItem from "./OrderItem.svelte";
-    import { getAppContext } from "$lib/stores";
+    import { getAppContext } from "$lib/stores/index.svelte";
 
     const app = getAppContext();
 

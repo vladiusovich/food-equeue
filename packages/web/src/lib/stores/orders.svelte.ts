@@ -1,9 +1,8 @@
-import foodServiceApi from "$lib/api/requests";
 import type FoodServiceApi from "$lib/api/requests/FoodServiceApi";
 import type { RuntimeDataType } from "$lib/types/events/RuntimeDataType";
 import type OrdersStatus from "$lib/types/OrdersStatus";
-import { runtimeDataStore, type RuntimeDataStore } from "./runtimeDataStore.svelte";
-import { userStore, type UserStore } from "./user.svelte";
+import { type RuntimeDataStore } from "./runtimeDataStore.svelte";
+import { type UserStore } from "./user.svelte";
 
 type OrderStateType = {
     id: string;
@@ -13,7 +12,7 @@ type OrderStateType = {
 const isCurrentUserOrder = (orderId: string | number, userOrderId: string | number) => orderId === userOrderId;
 
 const mapOrders = (orders: string[], userOrderId: string): OrderStateType[] => {
-    return orders.map((order) => ({
+    return orders.map(order => ({
         id: order,
         isCurrent: isCurrentUserOrder(order, userOrderId),
     }));
@@ -34,20 +33,16 @@ const sortForBoard = (a: OrderStateType, b: OrderStateType) => {
 export class OrdersStore {
     public userStore: UserStore;
     private foodServiceApi: FoodServiceApi;
-    private ordersStatusData?: OrdersStatus = $state();
+    private ordersStatusData = $state<OrdersStatus | undefined>(undefined);
 
-    constructor(
-        private dataRepository: RuntimeDataStore<RuntimeDataType>,
-        userStore: UserStore,
-        foodServiceApi: FoodServiceApi,
-    ) {
+    constructor (private dataRepository: RuntimeDataStore<RuntimeDataType>, userStore: UserStore, foodServiceApi: FoodServiceApi) {
         this.userStore = userStore;
         this.foodServiceApi = foodServiceApi;
     }
 
     public isLoading = $state(false);
 
-    public async fetch() {
+    public async fetch () {
         this.isLoading = true;
         this.ordersStatusData = await this.foodServiceApi.fetchOrders();
         this.isLoading = false;
@@ -60,7 +55,8 @@ export class OrdersStore {
     public orderIsReady = $derived.by(() => {
         const ordersProgress = this.ordersProgress;
         const readyOrders = ordersProgress.ready ?? [];
-        return readyOrders.some((order) => order.isCurrent);
+
+        return readyOrders.some(order => order.isCurrent);
     });
 
     public ordersProgress = $derived.by(() => {
@@ -76,4 +72,4 @@ export class OrdersStore {
     });
 }
 
-export const ordersStore = new OrdersStore(runtimeDataStore, userStore, foodServiceApi);
+export default OrdersStore;
