@@ -1,0 +1,34 @@
+steps:
+  - name: lint
+    image: node:22-alpine
+    commands:
+      - npm ci
+      - npm run lint
+
+  # - name: test
+  #   image: node:22-alpine
+  #   commands:
+  #     - npm run test
+
+  - name: build
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      repo: food-equeue/api
+      tags:
+        - latest
+        - ${CI_PIPELINE_NUMBER}
+      dockerfile: Dockerfile
+      output: type=docker
+    when:
+      - event: push
+        branch: master
+
+  - name: deploy
+    image: docker/compose:alpine-1.29.2
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - docker compose -f compose.yaml up -d --pull always --force-recreate
+    when:
+      - event: push
+        branch: master
