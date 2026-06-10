@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(code-review)",
+      "Skill(code-review:*)",
+      "Skill(verify)",
+      "Skill(verify:*)",
+      "Skill(simplify)",
+      "Skill(simplify:*)",
+      "Skill(fewer-permission-prompts)",
+      "Skill(fewer-permission-prompts:*)",
+      "Skill(loop)",
+      "Skill(loop:*)",
+      "Skill(schedule)",
+      "Skill(schedule:*)",
+      "Skill(claude-api)",
+      "Skill(claude-api:*)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Skill(init)",
+      "Skill(init:*)",
+      "Skill(review)",
+      "Skill(review:*)",
+      "Skill(security-review)",
+      "Skill(security-review:*)",
+      "Skill(keybindings-help)",
+      "Skill(keybindings-help:*)",
+      "Skill(update-config)",
+      "Skill(update-config:*)"
+    ]
+  }
+}

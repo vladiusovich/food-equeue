@@ -2,9 +2,6 @@
     let { value, isCurrent } = $props();
 </script>
 
-<span
-    class="chip"
-    class:preset-filled-success-500={isCurrent}
->
+<span class={["chip", isCurrent && "preset-filled-success-500"]}>
     {value}
 </span>
