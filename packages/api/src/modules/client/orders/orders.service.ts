@@ -1,10 +1,9 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { Order } from "./entities/order.entity";
 import { InjectRepository } from "@nestjs/typeorm";
 import { In, Repository } from "typeorm";
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { Logger } from "winston";
-import OrdersStatus from "../../share/types/OrdersStatus";
+import { Order, OrdersStatus } from "src/modules/shared";
 import CustomerOrderStatus from "./interfaces/customerOrderStatus";
 import tryFormatFullName from "./utility/formatHelper";
 

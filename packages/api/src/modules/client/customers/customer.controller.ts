@@ -3,7 +3,7 @@ import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { Logger } from "winston";
 import { CustomerOrderService } from "./customer.order.service";
 import CustomerOrderInfoResponse from "./models/customer-order-info.response";
-import { AccessTokenGuard } from "../customer-auth/guards/accessToken.guard";
+import { AccessTokenGuard } from "../auth/guards/accessToken.guard";
 
 @Controller("customer")
 @UseGuards(AccessTokenGuard)

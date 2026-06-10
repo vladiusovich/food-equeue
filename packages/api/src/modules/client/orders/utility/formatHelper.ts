@@ -1,4 +1,4 @@
-import { Customer } from "../../customers/entities/customer.entity";
+import { Customer } from "../../../shared";
 
 const tryFormatFullName = (customer?: Customer | null): string | null => {
     if (!customer) {

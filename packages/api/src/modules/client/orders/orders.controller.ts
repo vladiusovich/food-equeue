@@ -1,10 +1,10 @@
 import { Controller, Get, Inject, ParseIntPipe, Query, UseGuards } from "@nestjs/common";
-import { OrdersService as OrdersService } from "src/modules/client/orders/orders.service";
+import { OrdersService } from "./orders.service";
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { Logger } from "winston";
-import OrdersStatus from "../../share/types/OrdersStatus";
+import { OrdersStatus } from "src/modules/shared";
 import CustomerOrderStatus from "./interfaces/customerOrderStatus";
-import { AccessTokenGuard } from "../customer-auth/guards/accessToken.guard";
+import { AccessTokenGuard } from "../auth/guards/accessToken.guard";
 
 @Controller("orders")
 @UseGuards(AccessTokenGuard)

@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 import { OrdersController } from "./orders.controller";
-import { OrdersService } from "src/modules/client/orders/orders.service";
-import { Order } from "./entities/order.entity";
+import { OrdersService } from "./orders.service";
+import { Order } from "src/modules/shared";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { CustomerAuthModule } from "../customer-auth/customer-auth.module";
+import { CustomerAuthModule } from "../auth/customer-auth.module";
 
 @Module({
     imports: [

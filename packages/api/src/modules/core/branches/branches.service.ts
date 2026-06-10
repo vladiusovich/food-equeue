@@ -3,11 +3,10 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { WINSTON_MODULE_PROVIDER } from "nest-winston";
 import { Logger } from "winston";
-import { Order } from "src/modules/shared";
-import CustomerOrderInfoResponse from "./models/customer-order-info.response";
+import { Branch, Order } from "../../shared";
 
 @Injectable()
-export class CustomerOrderService {
+export class BranchService {
     constructor(
         @InjectRepository(Order)
         private ordersRepository: Repository<Order>,
@@ -16,20 +15,16 @@ export class CustomerOrderService {
         private readonly logger: Logger,
     ) {}
 
-    async getOrderByHash(hash: string): Promise<CustomerOrderInfoResponse> {
+    async getBranch(orderId: number): Promise<Branch> {
         const order = await this.ordersRepository.findOne({
-            where: { hash },
+            where: { id: orderId },
             relations: ["branch"],
         });
 
         if (!order) {
-            throw new NotFoundException(`Order not found`);
+            throw new NotFoundException(`Cannot find order with id: ${orderId}`);
         }
 
-        return {
-            orderId: order.id,
-            branchId: order.branch.id,
-            status: order.status,
-        };
+        return order?.branch;
     }
 }
