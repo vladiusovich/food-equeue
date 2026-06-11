@@ -1,29 +1,27 @@
 <script lang="ts">
-    import { onMount } from "svelte";
     import { goto } from "$app/navigation";
     import { page } from "$app/state";
     import { getAppContext } from "$lib/stores/index.svelte";
 
-    let hash: string | null;
     const app = getAppContext();
 
-    onMount(() => {
-        hash = page.url.searchParams.get("hash");
-        handleRedirect();
+    const hash = $derived(page.url.searchParams.get("hash"));
+
+    $effect(() => {
+        if (hash !== null) {
+            handleRedirect(hash);
+        }
     });
 
-    async function handleRedirect() {
-        if (hash) {
-            app.user.auth.logout();
-            await app.user.auth.login(hash);
-            if (app.user.auth.isLoggedIn) {
-                goto("order", { replaceState: true });
-            } else {
-                goto("welcome", { replaceState: true });
-            }
-        }
+    async function handleRedirect(currentHash: string) {
+        app.user.auth.logout();
+        await app.user.auth.login(currentHash);
 
-        // window.history.replaceState({}, "", window.location.pathname + window.location.hash);
+        if (app.user.auth.isLoggedIn) {
+            goto("order", { replaceState: true });
+        } else {
+            goto("/", { replaceState: true });
+        }
     }
 </script>
 

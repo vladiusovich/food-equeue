@@ -1,10 +1,11 @@
 <script lang="ts">
     import UI from "$lib/components/ui";
     import { getAppContext } from "$lib/stores/index.svelte";
+    import { onMount } from "svelte";
 
     const app = getAppContext();
 
-    $effect(() => {
+    onMount(() => {
         app.user.fetch();
     });
 </script>

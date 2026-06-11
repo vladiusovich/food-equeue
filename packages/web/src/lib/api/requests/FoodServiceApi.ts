@@ -1,11 +1,11 @@
 import type { IdentityCustomerInfo } from "$lib/types/customer/IdentityCustomerInfo";
 import type OrdersStatus from "$lib/types/OrdersStatus";
 import apiUrls from "../core/apiUrls";
-import HttpClient from "../core/httpClient/AxiosHttpClient";
+import AxiosHttpClient from "../core/httpClient/AxiosHttpClient";
 import type { IHttpClient } from "../core/httpClient/IHttpClient";
 
 class FoodServiceApi {
-    private httpClient: IHttpClient = new HttpClient({
+    private httpClient: IHttpClient = new AxiosHttpClient({
         baseURL: apiUrls.foodServer,
         timeout: 10000,
     });

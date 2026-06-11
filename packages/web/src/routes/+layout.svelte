@@ -10,7 +10,6 @@
     initAppContext();
 
     const app = getAppContext();
-    let isLoggedIn = $derived(app.user.auth.isLoggedIn);
 </script>
 
 <svelte:head>
@@ -22,7 +21,7 @@
         {@render children()}
     </div>
 
-    {#if isLoggedIn && page.status === 200}
+    {#if app.user.auth.isLoggedIn && page.status === 200}
         <MenuBar />
     {/if}
 </div>

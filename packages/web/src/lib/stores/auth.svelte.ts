@@ -1,4 +1,3 @@
-import foodServiceApi from "$lib/api/requests";
 import type FoodServiceApi from "$lib/api/requests/FoodServiceApi";
 import { browser } from "$app/environment";
 import { ORDER_HASH, ACCESS_TOKEN, REFRESH_TOKEN } from "$lib/const/authConstans";
@@ -9,7 +8,7 @@ export class AuthStore {
     public hash: string = $state("");
     public isLoggedIn: boolean = $derived(!!this.accessToken);
 
-    constructor(foodServiceApi: FoodServiceApi) {
+    constructor (foodServiceApi: FoodServiceApi) {
         this.foodServiceApi = foodServiceApi;
 
         if (browser) {
@@ -18,7 +17,7 @@ export class AuthStore {
         }
     }
 
-    public async login(hash: string): Promise<void> {
+    public async login (hash: string): Promise<void> {
         try {
             const info = await this.foodServiceApi.fetchCustomerIdentify({ hash });
 
@@ -30,11 +29,11 @@ export class AuthStore {
                 this.hash = hash;
             }
         } catch (error) {
-            // console.error("Login failed:", error);
+            console.error("Login failed:", error);
         }
     }
 
-    public logout(): void {
+    public logout (): void {
         localStorage.removeItem(ACCESS_TOKEN);
         localStorage.removeItem(REFRESH_TOKEN);
         localStorage.removeItem(ORDER_HASH);

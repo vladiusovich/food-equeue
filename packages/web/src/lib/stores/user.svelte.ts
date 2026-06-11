@@ -4,18 +4,18 @@ import { AuthStore } from "./auth.svelte";
 
 export class UserStore {
     private foodServiceApi: FoodServiceApi;
-    public auth: AuthStore;
     private orderInfo = $state<CustomerOrderInfo | undefined>(undefined);
     private messagesApiProvider: MessagesApiProvider;
+
+    public orderId = $derived(this.orderInfo?.orderId);
+    public branchId = $derived(this.orderInfo?.branchId);
+    public auth: AuthStore;
 
     constructor (auth: AuthStore, foodServiceApi: FoodServiceApi, messagesApiProvider: MessagesApiProvider) {
         this.auth = auth;
         this.foodServiceApi = foodServiceApi;
         this.messagesApiProvider = messagesApiProvider;
     }
-
-    public orderId = $derived(this?.orderInfo?.orderId ?? null);
-    public branchId = $derived(this?.orderInfo?.branchId ?? null);
 
     async fetch (): Promise<void> {
         this.orderInfo = await this.foodServiceApi.fetchCustomerOrder({

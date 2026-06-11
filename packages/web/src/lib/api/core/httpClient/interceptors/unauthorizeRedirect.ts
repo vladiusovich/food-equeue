@@ -8,7 +8,7 @@ export const unauthorizeRedirect = (error: AxiosError) => {
         localStorage.removeItem(REFRESH_TOKEN);
         localStorage.removeItem(ORDER_HASH);
 
-        goto("/welcome");
+        goto("/");
     }
     return Promise.reject(error);
 };
