@@ -1,14 +1,13 @@
 import type { IdentityCustomerInfo } from "$lib/types/customer/IdentityCustomerInfo";
 import type OrdersStatus from "$lib/types/OrdersStatus";
-import apiUrls from "../core/apiUrls";
-import AxiosHttpClient from "../core/httpClient/AxiosHttpClient";
-import type { IHttpClient } from "../core/httpClient/IHttpClient";
+import type { IHttpClient } from "../http/httpClient/IHttpClient";
 
 class FoodServiceApi {
-    private httpClient: IHttpClient = new AxiosHttpClient({
-        baseURL: apiUrls.foodServer,
-        timeout: 10000,
-    });
+    private httpClient: IHttpClient;
+
+    constructor(httpClient: IHttpClient) {
+        this.httpClient = httpClient;
+    }
 
     public async fetchBranches(request: { id: string }) {
         const d = await this.httpClient.request<Branch>({

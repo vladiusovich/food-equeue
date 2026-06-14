@@ -1,6 +1,5 @@
 import { createContext } from "svelte";
 import BranchStore from "./branch.svelte";
-import foodServiceApi from "$lib/api/requests";
 import type { AppStoreType } from "./types/AppStoreType";
 import UserStore from "./user.svelte";
 import MessagesApiProvider, { type SocketEventHandlersType } from "$lib/api/socketApiListner/MessagesApiProvider";
@@ -9,13 +8,28 @@ import { AuthStore } from "./auth.svelte";
 import OrdersStore from "./orders.svelte";
 import RuntimeDataStore from "./runtimeDataStore.svelte";
 import type { RuntimeDataType } from "$lib/types/events/RuntimeDataType";
-import apiUrls from "$lib/api/core/apiUrls";
-
-const runtimeDataStore = new RuntimeDataStore<RuntimeDataType>();
+import apiUrls from "$lib/api/http/apiUrls";
+import FoodServiceApi from "$lib/api/requests/FoodServiceApi";
+import AxiosHttpClient from "$lib/api/http/httpClient/AxiosHttpClient";
+import { attachTokenInterceptor } from "$lib/api/http/interceptors/attachToken";
+import { unauthorizeRedirect } from "$lib/api/http/interceptors/unauthorizeRedirect";
 
 export const [getAppContext, setAppContext] = createContext<AppStoreType>();
 
 export const initAppContext = () => {
+    const httpClient = new AxiosHttpClient({
+        baseURL: apiUrls.foodServer,
+        timeout: 10000,
+        interceptors: [
+            attachTokenInterceptor,
+            unauthorizeRedirect,
+        ],
+    });
+
+    const foodServiceApi = new FoodServiceApi(httpClient);
+
+    const runtimeDataStore = new RuntimeDataStore<RuntimeDataType>();
+
     const socketEventHandlers: SocketEventHandlersType = {
         "customer.orders.updated": data => runtimeDataStore.setData("ordersStatus", data),
         "customer.orders.executionTimeChanged": data => runtimeDataStore.setData("executionTime", data),

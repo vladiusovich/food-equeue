@@ -1,6 +1,17 @@
+export interface IRequestContext {
+    headers: Record<string, string>;
+}
+
+export interface IHttpClientInterceptor {
+    onRequest?: (context: IRequestContext) => void | Promise<void>;
+    onResponse?: (response: IHttpClientResponse) => void;
+    onError?: (error: unknown) => Promise<never>;
+}
+
 export interface IHttpClientOptions {
     baseURL: string;
     timeout: number;
+    interceptors?: IHttpClientInterceptor[];
 }
 
 export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
