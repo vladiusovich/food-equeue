@@ -2,6 +2,8 @@
     let { children } = $props();
 </script>
 
-<div class="card p-4 rounded-xl preset-filled-surface-100-900 border-0 w-full overflow-hidden">
+<div
+    class="card w-full overflow-hidden rounded-[18px] border border-surface-700/40 bg-surface-800 p-4 text-surface-50"
+>
     {@render children()}
 </div>

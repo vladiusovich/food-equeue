@@ -14,11 +14,11 @@
 
 {#if branch}
     <UI.Card>
-        <h4 class="h4">{branch?.name}</h4>
-        <p class="text-xs">
-            {branch?.address}
-        </p>
+        <div class="flex flex-col gap-0.5">
+            <span class="text-[15px] font-extrabold text-surface-50">{branch?.name}</span>
+            <span class="text-xs font-medium text-surface-200">{branch?.address}</span>
+        </div>
     </UI.Card>
 {:else}
-    <div class="placeholder rounded-xl animate-pulse w-full h-20"></div>
+    <div class="placeholder rounded-[18px] animate-pulse w-full h-20"></div>
 {/if}

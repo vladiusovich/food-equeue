@@ -13,24 +13,27 @@
     let ordersProgress = $derived(app.orders.ordersProgress);
     let inProgress = $derived(ordersProgress?.inProgress?.length ?? 0);
     let ready = $derived(ordersProgress?.ready?.length ?? 0);
+    let executionTime = $derived(app.orders.executionTime);
+    let isReady = $derived(app.orders.orderIsReady);
 </script>
 
-<div class="grid grid-cols-3 gap-2 w-full">
-    {#if app.orders.ordersStatus}
-        <UI.Card>
-            <QueueItem title="Count" value={inProgress + ready} />
-        </UI.Card>
-
-        <UI.Card>
-            <QueueItem title="In progress" value={inProgress} />
-        </UI.Card>
-
-        <UI.Card>
-            <QueueItem title="Ready" value={ready} />
-        </UI.Card>
-    {:else}
-        <div class="placeholder rounded-xl animate-pulse h-20"></div>
-        <div class="placeholder rounded-xl animate-pulse h-20"></div>
-        <div class="placeholder rounded-xl animate-pulse h-20"></div>
-    {/if}
-</div>
+{#if app.orders.ordersStatus}
+    <UI.Card>
+        <div class="flex w-full">
+            <div class="flex flex-1 items-center justify-center">
+                <QueueItem
+                    title={isReady ? "Time in progress" : "Waiting, min"}
+                    value={isReady ? `${executionTime ?? "—"} min` : executionTime ?? "—"}
+                />
+            </div>
+            <div class="flex flex-1 items-center justify-center">
+                <QueueItem title="In progress" value={inProgress} />
+            </div>
+            <div class="flex flex-1 items-center justify-center">
+                <QueueItem title={isReady ? "Total" : "Done"} value={isReady ? inProgress + ready : ready} />
+            </div>
+        </div>
+    </UI.Card>
+{:else}
+    <div class="placeholder w-full h-20"></div>
+{/if}
