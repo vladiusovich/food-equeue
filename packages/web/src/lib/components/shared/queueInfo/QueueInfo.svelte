@@ -19,7 +19,7 @@
 
 {#if app.orders.ordersStatus}
     <UI.Card class="relative">
-        <UI.AuroraBackground />
+        <UI.AuroraBackground accent={isReady ? "success" : "neutral"} />
         <div class="flex w-full">
             <div class="flex flex-1 items-center justify-center">
                 <QueueItem

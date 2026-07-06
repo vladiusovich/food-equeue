@@ -14,7 +14,7 @@
 
 {#if branch}
     <UI.Card class="relative">
-        <UI.AuroraBackground />
+        <UI.AuroraBackground accent={app.orders.orderIsReady ? "success" : "neutral"} />
         <div class="flex flex-col gap-0.5">
             <span class="text-[15px] font-extrabold text-surface-50">{branch?.name}</span>
             <span class="text-xs font-medium text-surface-200">{branch?.address}</span>

@@ -1,13 +1,20 @@
 <script lang="ts">
+    import { getAccentColors, type Accent } from "../types/Accent";
+
     interface AuroraBackground {
+        accent?: Accent;
         color1?: string;
         color2?: string;
     }
 
-    let { color1 = "var(--color-secondary-400)", color2 = "var(--color-warning-300)" }: AuroraBackground = $props();
+    let { accent = "neutral", color1, color2 }: AuroraBackground = $props();
+
+    const accentColors = $derived(getAccentColors(accent));
+    const resolvedColor1 = $derived(color1 ?? accentColors.color1);
+    const resolvedColor2 = $derived(color2 ?? accentColors.color2);
 </script>
 
-<div class="wbg-aurora" style:--aurora-color-1={color1} style:--aurora-color-2={color2}></div>
+<div class="wbg-aurora" style:--aurora-color-1={resolvedColor1} style:--aurora-color-2={resolvedColor2}></div>
 
 <style>
     .wbg-aurora {

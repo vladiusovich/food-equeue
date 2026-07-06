@@ -3,6 +3,7 @@
     import { Navigation, type NavigationRootProps } from "@skeletonlabs/skeleton-svelte";
     import type { Component } from "svelte";
     import { page } from "$app/state";
+    import { type Accent } from "$lib/components/ui/types/Accent";
 
     interface Link {
         label: string;
@@ -12,6 +13,7 @@
 
     interface NavigationProps extends NavigationRootProps {
         links: Link[];
+        accent?: Accent;
     }
 
     const colsClass: Record<number, string> = {
@@ -21,7 +23,15 @@
         4: "grid-cols-4",
     };
 
-    let { links, layout = "bar", ...props }: NavigationProps = $props();
+    const activeClasses: Record<Accent, string> = {
+        neutral: "bg-surface-50/16 text-surface-50",
+        primary: "bg-primary-500/16 text-primary-500",
+        success: "bg-success-500/16 text-success-500",
+        warning: "bg-warning-500/16 text-warning-500",
+        error: "bg-error-500/16 text-error-500",
+    };
+
+    let { links, layout = "bar", accent = "primary", ...props }: NavigationProps = $props();
 
     const isActive = (href: string) => page.url.pathname.startsWith(href);
 </script>
@@ -35,7 +45,7 @@
                 href={link.href}
                 class={[
                     "flex flex-col items-center gap-1 rounded-full px-1 transition-colors",
-                    active ? "bg-primary-500/16 text-primary-500" : "text-surface-200",
+                    active ? activeClasses[accent] : "text-surface-200",
                 ]}
             >
                 <Icon class="size-4.5" />

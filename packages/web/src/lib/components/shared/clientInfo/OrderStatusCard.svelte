@@ -43,11 +43,7 @@
 </script>
 
 <UI.Card class="relative">
-    {#if isReady}
-        <UI.AuroraBackground color1="var(--color-success-400)" color2="var(--color-success-600)" />
-    {:else}
-        <UI.AuroraBackground />
-    {/if}
+    <UI.AuroraBackground accent={isReady ? "success" : "neutral"} />
     <div class="flex flex-col items-center gap-6">
         <div class="relative mt-3 size-45" style:--ring-color={`var(--color-${accent}-500)`}>
             <div class={["ring-track absolute inset-0 rounded-full", isReady && "ring-track--ready"]}></div>

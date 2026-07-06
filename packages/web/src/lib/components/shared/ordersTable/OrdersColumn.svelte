@@ -1,5 +1,9 @@
 <script lang="ts">
-    let { title, dotClass, count, children }: { title: string; dotClass: string; count: number; children: any } = $props();
+    import { getAccentDotClass, type Accent } from "$lib/components/ui/types/Accent";
+
+    let { title, accent, count, children }: { title: string; accent: Accent; count: number; children: any } = $props();
+
+    const dotClass = $derived(getAccentDotClass(accent));
 </script>
 
 <div class="flex flex-1 flex-col gap-2">

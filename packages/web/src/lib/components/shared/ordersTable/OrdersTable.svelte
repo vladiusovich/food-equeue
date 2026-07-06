@@ -19,20 +19,20 @@
 
 {#if app.orders.ordersStatus}
     <UI.Card class="relative">
-        <UI.AuroraBackground />
+        <UI.AuroraBackground accent={app.orders.orderIsReady ? "success" : "neutral"} />
         {#if ordersProgress.inProgress.length === 0 && ordersProgress.ready.length === 0}
             <p class="py-2 text-center text-sm font-medium text-surface-200">There are no active orders right now</p>
         {:else}
             <div class="flex gap-3.5">
-                <OrdersColumn title="In progress" dotClass="bg-primary-500" count={ordersProgress.inProgress.length}>
+                <OrdersColumn title="In progress" accent="primary" count={ordersProgress.inProgress.length}>
                     {#each ordersProgress.inProgress as order (order.id)}
-                        <OrderItem value={order.id} isCurrent={order.isCurrent} />
+                        <OrderItem value={order.id} accent={order.isCurrent ? "primary" : "neutral"} />
                     {/each}
                 </OrdersColumn>
 
-                <OrdersColumn title="Done" dotClass="bg-success-500" count={ordersProgress.ready.length}>
+                <OrdersColumn title="Done" accent="success" count={ordersProgress.ready.length}>
                     {#each ordersProgress.ready as order (order.id)}
-                        <OrderItem value={order.id} isCurrent={order.isCurrent} />
+                        <OrderItem value={order.id} accent={order.isCurrent ? "success" : "neutral"} />
                     {/each}
                 </OrdersColumn>
             </div>
