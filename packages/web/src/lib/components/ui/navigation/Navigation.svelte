@@ -10,7 +10,7 @@
         icon: Component<IconProps, {}, "">;
     }
 
-    interface Props extends NavigationRootProps {
+    interface NavigationProps extends NavigationRootProps {
         links: Link[];
     }
 
@@ -21,7 +21,7 @@
         4: "grid-cols-4",
     };
 
-    let { links, layout = "bar", ...props }: Props = $props();
+    let { links, layout = "bar", ...props }: NavigationProps = $props();
 
     const isActive = (href: string) => page.url.pathname.startsWith(href);
 </script>
@@ -34,7 +34,7 @@
             <Navigation.TriggerAnchor
                 href={link.href}
                 class={[
-                    "flex flex-col items-center gap-1 rounded-full px-1 py-2.5 transition-colors",
+                    "flex flex-col items-center gap-1 rounded-full px-1 transition-colors",
                     active ? "bg-primary-500/16 text-primary-500" : "text-surface-200",
                 ]}
             >

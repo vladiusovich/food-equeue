@@ -18,7 +18,8 @@
 </script>
 
 {#if app.orders.ordersStatus}
-    <UI.Card>
+    <UI.Card class="relative">
+        <UI.AuroraBackground />
         {#if ordersProgress.inProgress.length === 0 && ordersProgress.ready.length === 0}
             <p class="py-2 text-center text-sm font-medium text-surface-200">There are no active orders right now</p>
         {:else}

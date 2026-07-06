@@ -18,7 +18,8 @@
 </script>
 
 {#if app.orders.ordersStatus}
-    <UI.Card>
+    <UI.Card class="relative">
+        <UI.AuroraBackground />
         <div class="flex w-full">
             <div class="flex flex-1 items-center justify-center">
                 <QueueItem
