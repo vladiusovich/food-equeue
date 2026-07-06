@@ -26,14 +26,20 @@
               },
     );
 
+    const stepDescriptions = {
+        Accepted: "Your request was accepted and is queued",
+        "In Progress": "Your request is being processed",
+        Done: "Please proceed to the service point",
+    };
+
     const steps = $derived([
         { label: "Accepted", active: true, current: false },
-        { label: "Cooking", active: true, current: !isReady },
+        { label: "In Progress", active: true, current: !isReady },
         { label: "Done", active: isReady, current: false },
     ]);
 
-    const badgeText = $derived(isReady ? "Ready" : "Cooking");
-    const description = $derived(isReady ? "Pick it up at the counter" : undefined);
+    const badgeText = $derived(isReady ? "Ready" : "In Progress");
+    const description = $derived(isReady ? stepDescriptions.Done : stepDescriptions["In Progress"]);
 </script>
 
 <UI.Card class="relative">
@@ -44,7 +50,7 @@
     {/if}
     <div class="flex flex-col items-center gap-6">
         <div class="relative mt-3 size-45" style:--ring-color={`var(--color-${accent}-500)`}>
-            <div class="ring-track absolute inset-0 rounded-full"></div>
+            <div class={["ring-track absolute inset-0 rounded-full", isReady && "ring-track--ready"]}></div>
             <div class="insert-ring absolute inset-2.5 flex flex-col items-center justify-center rounded-full bg-surface-800">
                 <span class="text-[10px] font-bold text-surface-200 uppercase">Your order</span>
                 <span class="text-5xl font-bold leading-none text-surface-50">{orderId}</span>
@@ -92,6 +98,11 @@
         box-shadow: rgb(from var(--ring-color) r g b / 0.3) 5px 0px 15px;
         background: conic-gradient(var(--ring-color) 0deg 245deg, color-mix(in srgb, white 8%, transparent) 245deg 360deg);
         animation: spin 3s linear infinite;
+    }
+
+    .ring-track--ready {
+        background: var(--ring-color);
+        animation: pulse-glow 2.2s ease-in-out infinite;
     }
 
     .insert-ring {
