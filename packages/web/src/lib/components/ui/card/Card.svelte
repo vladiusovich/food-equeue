@@ -1,9 +1,19 @@
 <script lang="ts">
-    let { children } = $props();
+    import type { ClassValue } from "svelte/elements";
+
+    interface Card {
+	    class?: ClassValue | undefined | null;
+        children: any;
+    }
+
+    let { children, class: classNames }: Card = $props();
 </script>
 
 <div
-    class="card w-full overflow-hidden rounded-[18px] border border-surface-700/40 bg-surface-800 p-4 text-surface-50"
+    class={[
+        "card w-full overflow-hidden rounded-[18px] border border-surface-700/40 bg-surface-800 p-4 text-surface-50",
+        classNames ? classNames : ""
+    ]}
 >
     {@render children()}
 </div>
