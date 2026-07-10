@@ -10,11 +10,11 @@
 {#if app.user.orderId}
     <OrderStatusCard orderId={app.user.orderId} isReady={app.orders.orderIsReady} />
 
-    {#if vibration.inAppEnabled && app.orders.orderIsReady && vibration.acknowledged && !vibration.inAppMuted}
+    {#if !vibration.isMute && app.orders.orderIsReady}
         <button
             type="button"
             class="w-full rounded-full border border-surface-700/40 bg-surface-800 px-4 py-2 text-xs font-bold text-surface-200 active:opacity-80"
-            onclick={vibration.muteInApp}
+            onclick={vibration.mute}
         >
             Mute vibration
         </button>

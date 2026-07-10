@@ -1,70 +1,74 @@
-import { createContext } from "svelte";
+import { getContext, setContext } from "svelte";
+import { browser } from "$app/environment";
 import useVibrationLoop from "$lib/utils/useVibrationLoop.svelte";
 import vibrationConfig from "$lib/config/vibrationConfig";
-import { orderReadyAcknowledgedState } from "./orderReadyAcknowledgedState.svelte";
 import type { OrdersStore } from "./orders.svelte";
 import type { UserStore } from "./user.svelte";
 
+const STORAGE_KEY_PREFIX = "order_ready_acknowledged";
+const CONTEXT_KEY = Symbol("order-ready-vibration");
+
+const storageKey = (orderId: string | number) => `${STORAGE_KEY_PREFIX}:${orderId}`;
+
+function readAcknowledged (orderId: string | number | undefined): boolean {
+    if (!orderId) return true;
+    if (!browser) return false;
+    return sessionStorage.getItem(storageKey(orderId)) === "1";
+}
+
 export type OrderReadyVibrationStore = ReturnType<typeof createOrderReadyVibration>;
 
-export const [getOrderReadyVibration, setOrderReadyVibration] = createContext<OrderReadyVibrationStore>();
-
 export function createOrderReadyVibration (orders: OrdersStore, user: UserStore) {
-    const modalVibration = useVibrationLoop(vibrationConfig.readyModal);
-    const inAppVibrationConfig = vibrationConfig.inApp;
-    const inAppVibration = inAppVibrationConfig.enabled ? useVibrationLoop(inAppVibrationConfig) : undefined;
+    const inAppVibration = useVibrationLoop(vibrationConfig.inApp);
 
-    let inAppMuted = $state(false);
+    let acknowledged = $state(readAcknowledged(user.orderId));
     let wasReady = false;
 
-    const acknowledged = $derived(!user.orderId || orderReadyAcknowledgedState.isAcknowledged(user.orderId));
-
     $effect(() => {
-        if (orders.orderIsReady && !acknowledged) {
-            modalVibration.start();
-        } else {
-            modalVibration.stop();
-        }
-
-        return modalVibration.stop;
+        acknowledged = readAcknowledged(user.orderId);
     });
 
     $effect(() => {
-        if (orders.orderIsReady && acknowledged && !inAppMuted) {
+        if (orders.orderIsReady && !acknowledged) {
             inAppVibration?.start();
         } else {
             inAppVibration?.stop();
         }
 
+        if (!orders.orderIsReady && wasReady) {
+            wasReady = false;
+            acknowledged = false;
+
+            if (browser && user.orderId) {
+                sessionStorage.removeItem(storageKey(user.orderId));
+            }
+        }
+
+        if (orders.orderIsReady) {
+            wasReady = true;
+        }
+
         return () => inAppVibration?.stop();
     });
 
-    $effect(() => {
-        if (orders.orderIsReady) {
-            wasReady = true;
-        } else if (wasReady) {
-            wasReady = false;
-            inAppMuted = false;
-
-            if (user.orderId) {
-                orderReadyAcknowledgedState.clear(user.orderId);
-            }
-        }
-    });
-
     return {
-        get acknowledged() { return acknowledged; },
-        get inAppMuted() { return inAppMuted; },
-        get inAppEnabled() { return inAppVibrationConfig.enabled; },
-
-        acknowledgeModal () {
-            if (user.orderId) {
-                orderReadyAcknowledgedState.acknowledge(user.orderId);
-            }
+        get isMute () {
+            return acknowledged;
         },
+        mute () {
+            acknowledged = true;
 
-        muteInApp () {
-            inAppMuted = true;
+            if (browser && user.orderId) {
+                sessionStorage.setItem(storageKey(user.orderId), "1");
+            }
         },
     };
+}
+
+export function setOrderReadyVibration (store: OrderReadyVibrationStore) {
+    setContext(CONTEXT_KEY, store);
+}
+
+export function getOrderReadyVibration () {
+    return getContext<OrderReadyVibrationStore>(CONTEXT_KEY);
 }

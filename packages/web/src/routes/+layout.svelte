@@ -3,7 +3,6 @@
     import favicon from "$lib/assets/favicon.svg";
     import { page } from "$app/state";
     import MenuBar from "$lib/components/shared/menuBar/MenuBar.svelte";
-    import OrderReadyModal from "$lib/components/shared/orderReadyModal/OrderReadyModal.svelte";
     import { getAppContext, initAppContext } from "$lib/stores/index.svelte";
     import { createOrderReadyVibration, setOrderReadyVibration } from "$lib/stores/orderReadyVibration.svelte";
 
@@ -36,6 +35,5 @@
 
     {#if app.user.auth.isLoggedIn && page.status === 200}
         <MenuBar />
-        <OrderReadyModal />
     {/if}
 </div>

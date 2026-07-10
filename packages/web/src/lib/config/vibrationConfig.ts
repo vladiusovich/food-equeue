@@ -3,19 +3,17 @@ export type VibrationLoopConfig = {
     intervalMs: number;
 };
 
-export type InAppVibrationConfig = { enabled: false } | ({ enabled: true } & VibrationLoopConfig);
-
 const vibrationConfig: {
-    readyModal: VibrationLoopConfig;
-    inApp: InAppVibrationConfig;
+    inApp: VibrationLoopConfig;
 } = {
-    readyModal: {
-        pattern: [2000],
-        intervalMs: 1500,
-    },
     inApp: {
-        enabled: true,
-        pattern: [500],
+        pattern: [
+            100, 100, 300, 100, 100, 300, // R (. - .)
+            100, 300,                     // E (.)
+            100, 100, 300, 300,           // A (. -)
+            300, 100, 100, 100, 100, 300, // D (- . .)
+            300, 100, 100, 100, 300, 100, 300, // Y (- . - -)
+        ],
         intervalMs: 2000,
     },
 };
