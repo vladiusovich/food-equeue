@@ -49,4 +49,6 @@ export const initAppContext = () => {
     };
 
     setAppContext(appStore);
+
+    return appStore;
 };

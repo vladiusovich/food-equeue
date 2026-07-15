@@ -67,7 +67,6 @@
                         class={[
                             "text-[10px] font-bold",
                             step.active ? "text-surface-50" : "text-surface-400",
-                            step.current && "step-pulse",
                         ]}>{step.label}</span
                     >
                 </div>

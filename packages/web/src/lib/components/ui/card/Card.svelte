@@ -11,7 +11,7 @@
 
 <div
     class={[
-        "card w-full overflow-hidden rounded-[18px] border border-surface-700/40 bg-surface-800 p-4 text-surface-50",
+        "card w-full overflow-hidden rounded-xl border border-surface-700/40 bg-surface-800 p-4 text-surface-50",
         classNames ? classNames : ""
     ]}
 >

@@ -3,16 +3,14 @@
     import favicon from "$lib/assets/favicon.svg";
     import { page } from "$app/state";
     import MenuBar from "$lib/components/shared/menuBar/MenuBar.svelte";
-    import { getAppContext, initAppContext } from "$lib/stores/index.svelte";
-    import { createOrderReadyVibration, setOrderReadyVibration } from "$lib/stores/orderReadyVibration.svelte";
+    import { initAppContext } from "$lib/stores/index.svelte";
+    import { initOrderReadyStore } from "$lib/stores/orderReadyVibration.svelte";
+    import { initNotifications } from "$lib/stores/orderReadyNotification.svelte";
 
     let { children } = $props();
 
-    initAppContext();
-
-    const app = getAppContext();
-
-    setOrderReadyVibration(createOrderReadyVibration(app.orders, app.user));
+    const app = initAppContext();
+    initOrderReadyStore(app.orders, app.user, initNotifications());
 
     let hasFetchedUser = false;
 

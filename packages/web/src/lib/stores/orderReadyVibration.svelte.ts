@@ -4,6 +4,7 @@ import useVibrationLoop from "$lib/utils/useVibrationLoop.svelte";
 import vibrationConfig from "$lib/config/vibrationConfig";
 import type { OrdersStore } from "./orders.svelte";
 import type { UserStore } from "./user.svelte";
+import type { OrderReadyNotificationStore } from "./orderReadyNotification.svelte";
 
 const STORAGE_KEY_PREFIX = "order_ready_acknowledged";
 const CONTEXT_KEY = Symbol("order-ready-vibration");
@@ -16,13 +17,14 @@ function readAcknowledged (orderId: string | number | undefined): boolean {
     return sessionStorage.getItem(storageKey(orderId)) === "1";
 }
 
-export type OrderReadyVibrationStore = ReturnType<typeof createOrderReadyVibration>;
+export type OrderReadyStore = ReturnType<typeof createOrderReadyStore>;
 
-export function createOrderReadyVibration (orders: OrdersStore, user: UserStore) {
+export function createOrderReadyStore (orders: OrdersStore, user: UserStore, notifications: OrderReadyNotificationStore) {
     const inAppVibration = useVibrationLoop(vibrationConfig.inApp);
 
     let acknowledged = $state(readAcknowledged(user.orderId));
     let wasReady = false;
+    let notified = false;
 
     $effect(() => {
         acknowledged = readAcknowledged(user.orderId);
@@ -31,6 +33,15 @@ export function createOrderReadyVibration (orders: OrdersStore, user: UserStore)
     $effect(() => {
         if (orders.orderIsReady && !acknowledged) {
             inAppVibration?.start();
+
+            if (!notified) {
+                notified = true;
+                notifications.notify("Your order is ready!", {
+                    body: user.orderId ? `Order #${user.orderId} is ready — please proceed to the service point.` : "Please proceed to the service point.",
+                    tag: `order-ready-${user.orderId ?? ""}`,
+                    requireInteraction: true,
+                });
+            }
         } else {
             inAppVibration?.stop();
         }
@@ -38,6 +49,7 @@ export function createOrderReadyVibration (orders: OrdersStore, user: UserStore)
         if (!orders.orderIsReady && wasReady) {
             wasReady = false;
             acknowledged = false;
+            notified = false;
 
             if (browser && user.orderId) {
                 sessionStorage.removeItem(storageKey(user.orderId));
@@ -65,10 +77,10 @@ export function createOrderReadyVibration (orders: OrdersStore, user: UserStore)
     };
 }
 
-export function setOrderReadyVibration (store: OrderReadyVibrationStore) {
-    setContext(CONTEXT_KEY, store);
+export function initOrderReadyStore (orders: OrdersStore, user: UserStore, notifications: OrderReadyNotificationStore) {
+    setContext(CONTEXT_KEY, createOrderReadyStore(orders, user, notifications));
 }
 
-export function getOrderReadyVibration () {
-    return getContext<OrderReadyVibrationStore>(CONTEXT_KEY);
+export function getOrderReadyStore () {
+    return getContext<OrderReadyStore>(CONTEXT_KEY);
 }
