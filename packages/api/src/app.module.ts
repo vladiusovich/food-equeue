@@ -3,7 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { EventEmitterModule } from "@nestjs/event-emitter";
 import { ScheduleModule } from "@nestjs/schedule";
 import { LoggerModule } from "./config/logger.module";
-import { SqLiteDbModule } from "./config/db.module";
+import { DbModule } from "./config/db.module";
 import envValidationScheme from "./config/envValidationScheme";
 import { ClientModule } from "./modules/client/client.module";
 import { StaffModule } from "./modules/staff/staff.module";
@@ -18,7 +18,7 @@ import { CoreModule } from "./modules/core/core.module";
         }),
         ScheduleModule.forRoot(),
         EventEmitterModule.forRoot(),
-        SqLiteDbModule,
+        DbModule,
         LoggerModule,
         CoreModule,
         ClientModule,
