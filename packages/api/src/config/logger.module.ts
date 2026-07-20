@@ -18,19 +18,6 @@ const appName = "GetStartedApp";
                         }),
                     ),
                 }),
-                new winston.transports.File({
-                    filename: "logs/application.log",
-                    level: "info",
-                    format: winston.format.combine(
-                        winston.format.timestamp(),
-                        winston.format.ms(),
-                        nestWinstonModuleUtilities.format.nestLike(appName, {
-                            colors: true,
-                            prettyPrint: true,
-                        }),
-                        winston.format.prettyPrint(),
-                    ),
-                }),
             ],
         }),
     ],
