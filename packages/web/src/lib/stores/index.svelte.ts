@@ -13,6 +13,7 @@ import FoodServiceApi from "$lib/api/requests/FoodServiceApi";
 import AxiosHttpClient from "$lib/api/http/httpClient/AxiosHttpClient";
 import { attachTokenInterceptor } from "$lib/api/http/interceptors/attachToken";
 import { unauthorizeRedirect } from "$lib/api/http/interceptors/unauthorizeRedirect";
+import { networkReachabilityInterceptor } from "$lib/api/http/interceptors/networkReachability";
 
 export const [getAppContext, setAppContext] = createContext<AppStoreType>();
 
@@ -23,6 +24,7 @@ export const initAppContext = () => {
         interceptors: [
             attachTokenInterceptor,
             unauthorizeRedirect,
+            networkReachabilityInterceptor,
         ],
     });
 
