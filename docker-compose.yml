@@ -1,0 +1,57 @@
+services:
+    postgres:
+        image: postgres:16-alpine
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: ${DB_USER}
+            POSTGRES_PASSWORD: ${DB_PASSWORD}
+            POSTGRES_DB: ${DB_NAME}
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        ports:
+            - "127.0.0.1:5432:5432"
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+    api:
+        build:
+            context: ./packages/api
+        restart: unless-stopped
+        depends_on:
+            postgres:
+                condition: service_healthy
+        environment:
+            PORT: 3000
+            IS_DEV: ${IS_DEV:-false}
+            IS_LOCAL_NETWORK_DEPLOY: ${IS_LOCAL_NETWORK_DEPLOY:-false}
+            CLIENT_APP_URL: ${CLIENT_APP_URL}
+            CLIENT_APP_LOCAL_NETWORK_URL: ${CLIENT_APP_LOCAL_NETWORK_URL}
+            JWT_SECRET: ${JWT_SECRET}
+            JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-3600s}
+            DB_HOST: postgres
+            DB_PORT: 5432
+            DB_USER: ${DB_USER}
+            DB_PASSWORD: ${DB_PASSWORD}
+            DB_NAME: ${DB_NAME}
+        ports:
+            - "3000:3000"
+
+    web:
+        build:
+            context: ./packages/web
+            # Baked into the static bundle at build time (SvelteKit $env/static/public) —
+            # changing these requires a rebuild, `environment:` at runtime has no effect.
+            args:
+                PUBLIC_FOOD_SERVER_URL: ${PUBLIC_FOOD_SERVER_URL}
+                PUBLIC_FOOD_SERVER_SOCKET_URL: ${PUBLIC_FOOD_SERVER_SOCKET_URL}
+        restart: unless-stopped
+        depends_on:
+            - api
+        ports:
+            - "3001:80"
+
+volumes:
+    postgres_data:
