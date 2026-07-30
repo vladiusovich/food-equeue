@@ -3,11 +3,13 @@
 Date: 2026-07-16
 Context: the customer queue client app already exists; a staff client app and staff API are in progress. Expected scale — dozens of branches, dozens of orders per branch.
 
+> **Update (2026-07-22):** Action item #3 (migrate SQLite → PostgreSQL) has been completed — the API now runs on Postgres, and a root `docker-compose.yml` provisions `postgres` + `api` + `web` together. The rest of this document reflects the state and recommendations as of the original analysis date; items #1, #2, #4, #5 in the action plan below are still open.
+
 ## Current state of the project
 
 - **Monorepo (npm workspaces)**: `packages/api` (NestJS 10 + TypeORM + Socket.io) and `packages/web` (SvelteKit 2 / Svelte 5).
 - The API is already logically split into `modules/client`, `modules/staff`, `modules/core`, `modules/shared` — a solid foundation for further separation.
-- **Database — SQLite**, a single file in a Docker volume, deployed on one VPS via Woodpecker CI (`docker compose up`), currently running on a local network (`192.168.100.11`).
+- **Database — SQLite**, a single file in a Docker volume, deployed on one VPS via Woodpecker CI (`docker compose up`), currently running on a local network (`192.168.100.11`). *(See update above — this has since moved to PostgreSQL.)*
 - **Critical finding**: the `staff` controllers (`staff-orders.controller.ts`, `staff-products.controller.ts`, etc.) currently have **no guards at all** — not a single staff endpoint is protected by authentication/authorization. This isn't an architecture question, it's a hole that needs closing before the staff API goes to production.
 
 ## 1. Should the staff API and client API be separated?
@@ -57,6 +59,6 @@ That order of magnitude is hundreds to low thousands of orders per day, and perh
 
 1. Close the guard gap on staff endpoints — this is a security blocker, not an architecture decision.
 2. Introduce a dedicated auth boundary for staff (roles, JWT audience).
-3. Migrate SQLite → Postgres while the data volume is still small — cheap now, only gets more expensive later.
+3. ~~Migrate SQLite → Postgres while the data volume is still small — cheap now, only gets more expensive later.~~ **Done (2026-07-22).**
 4. Populate `packages/shared` before starting the third app.
 5. Build the staff client as a separate SvelteKit PWA package in the same monorepo.

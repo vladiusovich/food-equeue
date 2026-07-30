@@ -1,23 +1,27 @@
 steps:
-  - name: lint
-    image: node:22-alpine
-    commands:
-      - npm ci
-      - npm run lint
-
-  # - name: test
-  #   image: node:22-alpine
-  #   commands:
-  #     - npm run test
-
-  - name: build
+  - name: build-api
     image: woodpeckerci/plugin-docker-buildx
     settings:
       repo: food-equeue/api
+      context: packages/api
+      dockerfile: packages/api/Dockerfile
       tags:
         - latest
-        - ${CI_PIPELINE_NUMBER}
-      dockerfile: Dockerfile
+        - ${CI_COMMIT_SHA:0:7}
+      output: type=docker
+    when:
+      - event: push
+        branch: master
+
+  - name: build-web
+    image: woodpeckerci/plugin-docker-buildx
+    settings:
+      repo: food-equeue/web
+      context: packages/web
+      dockerfile: packages/web/Dockerfile
+      tags:
+        - latest
+        - ${CI_COMMIT_SHA:0:7}
       output: type=docker
     when:
       - event: push
@@ -28,7 +32,7 @@ steps:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     commands:
-      - docker compose -f compose.yaml up -d --pull always --force-recreate
+      - docker compose -f docker-compose.yml up -d --force-recreate
     when:
       - event: push
         branch: master
